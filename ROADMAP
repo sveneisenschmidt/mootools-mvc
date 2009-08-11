@@ -2,6 +2,7 @@ Roadmap
 
 * Milestone 3 (August 2009)
   - create and use Mvc_Layout to get rid of Mvc_Controller_Front::_resetHtml etc [open]
+  - Provide a Pagination Helper
 
 * Milestone 2 (~15 August 2009)
   - add ActionStack to disptach multiple Controllers at Runtime [open]
@@ -11,9 +12,11 @@ Roadmap
   - add a config property where you can define the base page layout area,
     the FrontController should use this property [open]
   - refactor Mvc_Config to Mvc_Registry [open]
-  - fix Bug in Router: default paramaters with are strings cant be '' [open]
   - provide an example for module [open]
   - provide an example for models [open]
+
+  - fix Bug in Router: default paramaters witch are strings cant be '' [done]
+    (DONE: Use * instead)
 
 * Milestone 1 (10 August 2009)
   - [done]

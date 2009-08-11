@@ -1,13 +1,11 @@
 <div class="list-view">
     <h2>ListView</h2>
     <div class="inner-content">
-        <ul>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-
-        </ul>
+        <p>You can swap trough pages by appending to the url 1,2,3,4 etc (<a href="#/news/2">news/2</a>, <a href="#/news/11">news/11</a>)</p>
+        <div class="page-info"></div>
     </div>
 </div>
+<script type="javascript">
+    document.getElement('.page-info').set('text', 'Page: ' + view.vars.page);
+</script>
 

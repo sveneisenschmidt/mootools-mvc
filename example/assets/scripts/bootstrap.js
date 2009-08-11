@@ -31,8 +31,8 @@ window.addEvent('domready', function() {
                     'defaults': [
                         {'controller': 'content'},
                         {'action': 'view'},
-                        {'date': ' '},
-                        {'id': ' '}
+                        {'date': '01-01-1970'},
+                        {'id': '*'}
                     ]
                 }
             },

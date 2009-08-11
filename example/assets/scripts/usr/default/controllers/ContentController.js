@@ -14,6 +14,7 @@ var ContentController = new Class({
 
     listAction: function()
     {
+        this.getView().assign('page', this._getParam('page'));
         this.render();
     },
 
