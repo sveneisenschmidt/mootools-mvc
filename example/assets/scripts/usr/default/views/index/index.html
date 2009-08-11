@@ -5,17 +5,16 @@
     </div>
 </div>
 <script type="javascript">
-    var baseEl = document.getElement('.index-view');
-        baseEl.getElement('h2').set('text', view.vars.title);
 
+    this.getElement('h2').set('text', this.title);
+    
     var Ul = new Element('ul');
-
-    view.vars.links.each(function(item){
+    this.links.each(function(item){
         var Li = new Element('li');
         new Element('a', item).inject(Li);
             Li.inject(Ul);
     });
+    Ul.inject(this.getElement('.inner-content'));
 
-    Ul.inject(baseEl.getElement('.inner-content'));
 </script>
 

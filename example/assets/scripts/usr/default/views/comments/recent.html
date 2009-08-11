@@ -4,17 +4,21 @@
         <p>This List of comments is retrieved from <em><a href="assets/scripts/usr/default/data/comments.json">assets/scripts/usr/default/data/comments.json</a></em><br/>
             through a Model called Comments <em>(Default_Comments_Model)</em>.</p>
         <p>It gets rendered by a view script called <em>comments/recent.html</em>.</p>
-        <p>There are only 3 entries but you can set lower amount fo the results <br/>
-           by changing/adding the last url paramter like <a href="#/comments/recent/1">Get only one entry</a> or <br/>
-           <a href="#/comments/recent/50">Get fifty entries</a>.</p>
+        <p>There are only 3 entries but you can set a lower amount of results returned <br/>
+           by changing/adding the last url paramter like: </p>
+        <ul>
+            <li><a href="#/comments/recent/1"><em>#/comments/recent/<b>1</b></em> <small>(Get only one entry)</small></a></li>
+            <li><a href="#/comments/recent/50"><em>#/comments/recent/<b>50</b></em> <small>(Get fifty entries)</small></a></li>
+        </ul>
+        <hr/>
+        <p><strong>Recent comments: </strong></p>
     </div>
 </div>
 <script type="javascript">
 
-
     var commentContainer = new Element('ul');
 
-    view.vars.comments.each(function(comment, index) {
+    this.comments.each(function(comment, index) {
 
         var commentTitle = new Element('h3', {
             'text': comment.title + ' | from ' + comment.author
@@ -31,6 +35,6 @@
                 .inject(commentContainer);
     });
 
-    commentContainer.inject(document.getElement('.comments-recent-view').getElement('.inner-content'), 'bottom');
+    commentContainer.inject(this.getElement('.inner-content'), 'bottom');
 
 </script>
