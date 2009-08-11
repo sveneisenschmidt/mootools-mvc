@@ -1,0 +1,19 @@
+<div class="news-view">
+    <h2>News Detail View with URL Params</h2>
+    <div class="inner-content">
+
+    </div>
+</div>
+<script type="javascript">
+    var baseEl = document.getElement('.news-view');
+    var Ul = new Element('ul');
+
+    for(var param in view.vars.params) {
+        var Li = new Element('li', {
+            'text': param +': ' + view.vars.params[param]
+        }).inject(Ul)  
+    }
+
+    Ul.inject(baseEl.getElement('.inner-content'));
+</script>
+

@@ -15,6 +15,12 @@ var ContentController = new Class({
     listAction: function()
     {
         this.render();
+    },
+
+    viewAction: function()
+    {
+        this.getView().assign('params', this._getParams());
+        this.render();
     }
 
 });

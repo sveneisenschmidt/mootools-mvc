@@ -53,11 +53,25 @@ var Mvc_Controller_Dispatcher = new Class({
         this.setResponse(new Mvc_Response_Http());
     },
 
+    /**
+     * Mvc_Controller_Dispatcher::setResponse
+     *
+     * @param object response
+     * @scope public
+     * @return object
+     */
     setResponse: function(response)
     {
         this._response = response;
+        return this;
     },
 
+    /**
+     * Mvc_Controller_Dispatcher::getResponse
+     *
+     * @scope public
+     * @return object
+     */
     getResponse: function()
     {
         return this._response;

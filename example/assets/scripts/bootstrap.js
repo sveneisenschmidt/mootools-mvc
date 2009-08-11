@@ -27,13 +27,12 @@ window.addEvent('domready', function() {
             },
             {
                 'newsview': {
-                    'route': 'news/:type/:year/:id',
+                    'route': 'news/:date/:id',
                     'defaults': [
                         {'controller': 'content'},
                         {'action': 'view'},
-                        {'year': '09'},
-                        {'id': ' '},
-                        {'type': ' '}
+                        {'date': ' '},
+                        {'id': ' '}
                     ]
                 }
             },
@@ -66,6 +65,11 @@ window.addEvent('domready', function() {
            {
                'index': {
                    'view': 'index/index.html'
+               }
+           },
+           {
+               'newsview': {
+                   'view': 'content/view.html'
                }
            }
         ]
