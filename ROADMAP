@@ -1,0 +1,16 @@
+Roadmap
+
+* Milestone 3 (August 2009)
+  - create and use Mvc_Layout to get rid of Mvc_Controller_Front::_resetHtml etc [open]
+
+* Milestone 2 (~12 August 2009)
+  - add ActionStack to disptach multiple Controllers at Runtime [open]
+  - add Staging (development/production) [open]
+  - evaluate if Events are kept during rendering [open]
+  - change the Reponse output from set('html', *) to inject Element [open]
+  - add a config property where you can define the base page layout area,
+    the FrontController should use this property [open]
+  - refactor Mvc_Config to Mvc_Registry [open]
+
+* Milestone 1 (10 August 2009)
+  - [done]
