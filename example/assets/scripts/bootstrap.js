@@ -88,7 +88,14 @@ function bootstrap()
     $app.getFrontController().setModuleDirectory(
         APPLICATION_PATH + 'assets/scripts/usr/'
     );
+
+    // define here your custom class calls for manipualting the rendered response
+    // like setting events etc
     
+    $app.getFrontController().addEvent('renderingDone', function() {
+        console.log(document.getElement('body').get('html'));
+    });
+
     $app.run();
 
 

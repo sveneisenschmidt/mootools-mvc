@@ -155,6 +155,7 @@ var Mvc_Controller_Front = new Class({
                 entry.element.set('html', entry.element.get('html') + entry.content);
             });
 
+            this.fireEvent('renderingDone');
         }
         
         this._runOnce = true;
