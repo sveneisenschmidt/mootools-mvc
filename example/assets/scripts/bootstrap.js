@@ -36,6 +36,16 @@ window.addEvent('domready', function() {
                     ]
                 }
             },
+            {
+                'recent': {
+                    'route': 'comments/recent/:amount',
+                    'defaults': [
+                        {'controller': 'comments'},
+                        {'action': 'recent'},
+                        {'amount': '10'}
+                    ]
+                }
+            },
 
             // TESTING
             {
@@ -62,6 +72,9 @@ window.addEvent('domready', function() {
                    'target': document.getElement('body')
                }
            },
+           // You can assign here a diffetent view file for the route
+           // if you dont do so the Action Renderer will look up for
+           // a file in the given in module path like views/{controller}/{action}.html
            {
                'index': {
                    'view': 'index/index.html'
@@ -78,8 +91,6 @@ window.addEvent('domready', function() {
     bootstrap();
 });
 
-
-
 function bootstrap()
 {
     $app = new Mvc_Application(config);
@@ -89,19 +100,27 @@ function bootstrap()
         APPLICATION_PATH + 'assets/scripts/usr/'
     );
 
-    // define here your custom class calls for manipualting the rendered response
-    // like setting events etc
-    
+    $app.getFrontController().addEvent('beforeRouteStartup', function() {
+        // this will be fired when a request is done
+    });
+
+    $app.getFrontController().addEvent('afterRouteShutdown', function() {
+        // this will be fired when a route is succesfull delivered
+    });
+
+    $app.getFrontController().addEvent('dispatchLoopStartup', function() {
+        // this will be fired before the actual request is getting started to be dispatched
+    });
+
+    $app.getFrontController().addEvent('dispatchLoopShutdown', function() {
+        // this will be fired after the response is succesfully generated an given back
+    });
+
     $app.getFrontController().addEvent('renderingDone', function() {
-        console.log(document.getElement('body').get('html'));
+    // define here your custom class calls for manipualting the rendered response
+    // like setting events etc    
     });
 
     $app.run();
-
-
-
     
 }
-
-
-

@@ -71,6 +71,16 @@ class mvcJavascriptComposer
     protected function filterArray($array)
     {
         $array = array_diff($array, $this->badlist);
+        
+        foreach($array as $key => $value) {
+            foreach($this->badlist as $badString) {
+                // strlen($badString)
+                if((substr($value, strlen($value) -  strlen($badString), strlen($value))) == $badString) {
+                    unset($array[$key]);
+                }
+            }
+        }
+        
         return $array;
     }
 
@@ -107,7 +117,7 @@ class mvcJavascriptComposer
 
 }
 
-$library = new mvcJavascriptComposer(array('.js'), array('.', '..'));
+$library = new mvcJavascriptComposer(array('.js'), array('.', '..', '.json'));
 $library->addPath(realpath(dirname(__FILE__) ). '/lib/mvc/');
 $library->addPath(realpath(dirname(__FILE__) ). '/usr/');
 $files = $library->get();
