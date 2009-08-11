@@ -150,7 +150,7 @@ var Mvc_View = new Class({
      */
     getElement: function(selector)
     {
-        return this._getRenderContainer().getElement(string);
+        return this._getRenderContainer().getElement(selector);
     },
 
     /**
@@ -162,6 +162,6 @@ var Mvc_View = new Class({
      */
     getElements: function(selector)
     {
-        return this._getRenderContainer().getElements(string);
+        return this._getRenderContainer().getElements(selector);
     }
 });

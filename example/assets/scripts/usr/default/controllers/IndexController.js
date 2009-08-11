@@ -14,6 +14,9 @@ var IndexController = new Class({
 
     indexAction: function()
     {
+
+        var router = this.getFrontController().getRouter();
+        
         this.getView().assign('title', 'Index Seite!')
         this.getView().assign('links', [
            {
@@ -21,8 +24,11 @@ var IndexController = new Class({
                href: '#/'
            },
            {
-               text: 'Test Link 2',
-               href: '#/news'
+               text: 'Test link to a detail news page assembled by the router',
+               href: '#/' + router.assemble({
+                              'id': 'assembled-page-link.html',
+                              'date': '31-12-1999'
+                          },'newsview')
            }
         ]);
 

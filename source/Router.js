@@ -111,5 +111,29 @@ var Mvc_Router = new Class({
         }
         
         return routeToReturn;
+    },
+
+    assemble: function(params, routeName)
+    {
+        var route = this.getRouteByName(routeName);
+
+        if(!$chk(route)) {
+            new Mvc_Router_Exception(this._name + '::assemble -  Route "' + routeName + '" could not be found!');
+        }
+
+        var plainRoute = route.getPlainRoute();
+        var assembledRoute = plainRoute;
+
+
+        for(var paramName in params) {
+            assembledRoute = assembledRoute.replace(':' + paramName,  params[paramName]);
+        }
+
+        var params = route.getParams();
+        for(var paramName in params) {
+            assembledRoute = assembledRoute.replace(':' + paramName,  params[paramName]);
+        }
+
+       return assembledRoute;
     }
 });
