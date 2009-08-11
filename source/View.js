@@ -111,10 +111,16 @@ var Mvc_View = new Class({
             new Mvc_View_Exception('No File for View found under: "' + fullPath + '"!');
         }
 
+        for(var propName in this.vars) {
+            if($chk(this[propName])) {
+                new Mvc_Exception(this._name + ': Possible overwrite of an internal Method/Property "' + propName +  '"!');
+            }
+            this[propName] = this.vars[propName];
+        }
+        this.vars = null;
         
         this._getRenderContainer().set('html', request.response.text);
         this._getRenderContainer().getElements('script').each(function(script){
-            var view = this;
             eval(script.get('text'));
             script.dispose();
         }.bind(this));
@@ -133,5 +139,29 @@ var Mvc_View = new Class({
     getScriptPath: function()
     {
         return this._scriptPath;
+    },
+
+    /**
+     * Mvc_Controller_Action::getElement
+     *
+     * @param string selector
+     * @scope public
+     * @return object
+     */
+    getElement: function(selector)
+    {
+        return this._getRenderContainer().getElement(string);
+    },
+
+    /**
+     * Mvc_Controller_Action::getElements
+     *
+     * @param string selector
+     * @scope public
+     * @return object
+     */
+    getElements: function(selector)
+    {
+        return this._getRenderContainer().getElements(string);
     }
 });
