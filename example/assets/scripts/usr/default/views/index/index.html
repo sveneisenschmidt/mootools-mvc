@@ -1,0 +1,21 @@
+<div class="index-view">
+    <h2>IndexView</h2>
+    <div class="inner-content">
+
+    </div>
+</div>
+<script type="javascript">
+    var baseEl = document.getElement('.index-view');
+        baseEl.getElement('h2').set('text', view.vars.title);
+
+    var Ul = new Element('ul');
+
+    view.vars.links.each(function(item){
+        var Li = new Element('li');
+        new Element('a', item).inject(Li);
+            Li.inject(Ul);
+    });
+
+    Ul.inject(baseEl.getElement('.inner-content'));
+</script>
+
