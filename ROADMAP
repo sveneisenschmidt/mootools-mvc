@@ -11,8 +11,8 @@ Roadmap
     the FrontController should use this property [open]
   - refactor Mvc_Config to Mvc_Registry [open]
   - provide an example for module [open]
-  - provide an example for models [open]
 
+  - provide an example for models [done]
   - change the Response output from set('html', *) to inject Element [obsolete]
   - evaluate if Events are kept during rendering [done]
     (REJECTED: Not possible.)
