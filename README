@@ -1,6 +1,6 @@
 Example
 
 For running the example provided in the folder ./example you need to point
-a running Apache Instance (Localhost) to the example folder (http://localhost/mootools-mvc/example/).
-The Apache needs to have PHP installed and in the Apache Coonfiguration the Property 'AlloOveride'
+a running Apache Instance (Localhost) to the example folder (i.e. http://localhost/mootools-mvc/example/).
+The Apache needs to have PHP installed and in the Apache Configuration the Property 'AllowOverride'
 set to all.
