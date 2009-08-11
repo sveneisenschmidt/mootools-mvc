@@ -7,14 +7,13 @@ Roadmap
 * Milestone 2 (~15 August 2009)
   - add ActionStack to disptach multiple Controllers at Runtime [open]
   - add Staging (development/production) [open]
-  - change the Response output from set('html', *) to inject Element [open]
   - add a config property where you can define the base page layout area,
     the FrontController should use this property [open]
   - refactor Mvc_Config to Mvc_Registry [open]
   - provide an example for module [open]
   - provide an example for models [open]
 
-
+  - change the Response output from set('html', *) to inject Element [obsolete]
   - evaluate if Events are kept during rendering [done]
     (REJECTED: Not possible.)
   - fix Bug in Router: default paramaters witch are strings cant be '' [done]
