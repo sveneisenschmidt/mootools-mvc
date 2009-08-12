@@ -69,7 +69,7 @@ window.addEvent('domready', function() {
        'views': [
            {
                'default': {
-                   'target': document.getElement('body')
+                   'target': 'html > body'
                }
            },
            // You can assign here a diffetent view file for the route

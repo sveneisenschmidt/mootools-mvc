@@ -152,7 +152,8 @@ var Mvc_Controller_Front = new Class({
                                       .getResponseBody();
 
             content.each(function(entry) {
-                entry.element.set('html', entry.element.get('html') + entry.content);
+                var target = document.getElement(entry.target);
+                    target.set('html', target.get('html') + entry.content);
             });
 
             this.fireEvent('renderingDone');

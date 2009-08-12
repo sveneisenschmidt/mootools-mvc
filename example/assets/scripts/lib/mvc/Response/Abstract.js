@@ -28,7 +28,7 @@ var Mvc_Response_Abstract = new Class({
     {
         this._responseBody.include(
             {
-                'element': key,
+                'target': key,
                 'content': value
             }
         );
