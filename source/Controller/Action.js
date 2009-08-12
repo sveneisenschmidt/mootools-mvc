@@ -41,14 +41,30 @@ var Mvc_Controller_Action = new Class({
      */
     initialize: function(response)
     {
-        this.config = new Mvc_Registry().getInstance().get('config');
+        this.config = new Mvc_Registry()
+                             .getInstance()
+                                 .get('config');
     },
 
+    /**
+     * Mvc_Controller_Action::setResponse
+     *
+     * @param object response
+     * @scope public
+     * @return void
+     */
     setResponse: function(response)
     {
         this._response = response;
+        return this;
     },
 
+    /**
+     * Mvc_Controller_Action::getResponse
+     *
+     * @scope public
+     * @return object
+     */
     getResponse: function()
     {
         return this._response;

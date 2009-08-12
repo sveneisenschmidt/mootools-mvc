@@ -91,36 +91,33 @@ var Mvc_Controller_Dispatcher = new Class({
             this.setResponse(response);
         }
 
-        actionMethod     = this.getActionMethod(request);
-        controllerClass  = this.getControllerClass(request);
-
         if(this.getFrontController().isStage('developement') && $chk(console)) {
-            console.info('dispatch: ' + controllerClass + '::' + actionMethod + '!');
+            console.info('dispatch: ' + this.getControllerClass(request) + '::' + this.getActionMethod(request) + '!');
         }
-
-        var controller;
 
         try {
 
-            controller = this.loadClass(controllerClass);
-            controller.setResponse(this.getResponse());
-            controller.setFrontController(this.getFrontController());
-            controller.setParams(request.getAllParams());
-
-            //finally
-            controller.dispatch(actionMethod);
-
-            return this;
+            this._loadClass(this.getControllerClass(request))
+                .setResponse(this.getResponse())
+                    .setFrontController(this.getFrontController())
+                        .setParams(request.getAllParams())
+                            .dispatch(this.getActionMethod(request));
             
         } catch (exception) {
             this.setError(exception);
-            return this;
         }
 
         return this;
     },
 
-    loadClass: function(controller)
+    /**
+     * Mvc_Controller_Front::_loadClass
+     *
+     * @param string controller
+     * @scope protected
+     * @return object
+     */
+    _loadClass: function(controller)
     {
         try {
             controllerObj = eval('new ' + controller + '()');
@@ -129,7 +126,7 @@ var Mvc_Controller_Dispatcher = new Class({
         }
 
         return controllerObj;
-    },
+    }.protect(),
     
     /**
      * Mvc_Controller_Front::setModuleDirectory

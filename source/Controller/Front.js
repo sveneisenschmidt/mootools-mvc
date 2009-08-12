@@ -154,7 +154,6 @@ var Mvc_Controller_Front = new Class({
         this.getRequest().setParams(
             this._getRouteParamsWithRequest(route));
 
-
         var module = this.getDispatcher()
                         .setModule(this.getRequest())
                             .getModule();
@@ -162,6 +161,8 @@ var Mvc_Controller_Front = new Class({
         // configure the layout
         this.getLayout().setScriptPath(
             this.getDispatcher().getModulesDirectory() + module  + '/layout/index.html');
+                this.addEvent('dispatchLoopShutdown', function(){
+                    this.getLayout().start()}.bind(this));
 
         this.fireEvent('dispatchLoopStartup');
         
@@ -187,20 +188,15 @@ var Mvc_Controller_Front = new Class({
             if ($chk(this.isStage('developement'))) {
                 html += '<p>' + this.getDispatcher().getError() + '</p>';
             }
-
                 html += '<hr/>';
                 html += '<p>' + (new Date().toString()) +  '</p>';
 
-                this.getLayout().getTarget().set('html', html);
-
+            this.getLayout().getTarget().set('html', html);
             this._resetDispatcher();
             
         } else {
 
             this.fireEvent('dispatchLoopShutdown');
-
-            // starts the Layout
-            this.getLayout().start();
             
             var content = this.getDispatcher()
                                   .getResponse()
@@ -209,7 +205,7 @@ var Mvc_Controller_Front = new Class({
             content.each(function(entry) {
                 var target = this.getLayout().getElement(entry.target);
                     target.set('html', target.get('html') + entry.content);                    
-            }.bind(this));
+                        }.bind(this));
 
             var helpers = this.getDispatcher()
                                  .getResponse()
@@ -218,8 +214,7 @@ var Mvc_Controller_Front = new Class({
             if($chk(helpers)) {
                 helpers.each(function(helper) {
                     helper.execute(this);
-                }.bind(this));
-            }
+                        }.bind(this));}
 
             this.fireEvent('renderingDone');
         }
