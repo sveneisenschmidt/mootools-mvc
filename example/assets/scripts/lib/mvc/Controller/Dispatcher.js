@@ -28,7 +28,7 @@ var Mvc_Controller_Dispatcher = new Class({
 
     _defaultModule:     'default',
 
-    _moduleDirectory: null,
+    _modulesDirectory: null,
 
     _defaultErrorController: 'ErrorController',
 
@@ -158,26 +158,26 @@ var Mvc_Controller_Dispatcher = new Class({
     },
     
     /**
-     * Mvc_Controller_Front::setDefaultScriptPath
+     * Mvc_Controller_Front::setModuleDirectory
      *
      * @scope public
      * @return void
      */
-    setModuleDirectory: function(path)
+    setModulesDirectory: function(path)
     {
-        this._moduleDirectory = path;
+        this._modulesDirectory = path;
         return this;
     },
 
     /**
-     * Mvc_Controller_Front::getDefaultScriptPath
+     * Mvc_Controller_Front::getModuleDirectory
      *
      * @scope public
      * @return void
      */
-    getModuleDirectory: function()
+    getModulesDirectory: function()
     {
-        return this._moduleDirectory;
+        return this._modulesDirectory;
     },
     /**
      * Mvc_Controller_Front::getDefaultController
@@ -202,6 +202,17 @@ var Mvc_Controller_Dispatcher = new Class({
     },
 
     /**
+     * Mvc_Controller_Front::setDefaultModule
+     *
+     * @scope public
+     * @return string
+     */
+    setDefaultModule: function(module)
+    {
+        this._defaultModule = module;
+    },
+
+    /**
      * Mvc_Controller_Front::getDefaultModule
      *
      * @scope public
@@ -212,11 +223,24 @@ var Mvc_Controller_Dispatcher = new Class({
         return this._defaultModule;
     },
 
+    /**
+     * Mvc_Controller_Front::getModule
+     *
+     * @scope public
+     * @return string
+     */
     getModule: function()
     {
         return this._module;
     },
 
+    /**
+     * Mvc_Controller_Front::setModule
+     *
+     * @param object request
+     * @scope public
+     * @return object
+     */
     setModule: function(request)
     {
         var module = request.getModuleName();

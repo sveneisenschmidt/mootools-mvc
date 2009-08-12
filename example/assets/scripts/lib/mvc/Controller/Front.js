@@ -263,9 +263,9 @@ var Mvc_Controller_Front = new Class({
      * @scope public
      * @return object
      */
-    setModuleDirectory: function(path)
+    setModulesDirectory: function(path)
     {
-        this.getDispatcher().setModuleDirectory(path);
+        this.getDispatcher().setModulesDirectory(path);
         return this;
     },
 
@@ -351,8 +351,14 @@ var Mvc_Controller_Front = new Class({
      * @scope public
      * @return object
      */
-    getModuleDirectory: function()
+    getModulesDirectory: function()
     {
-        return this.getDispatcher().getModuleDirectory();
+        return this.getDispatcher().getModulesDirectory();
+    },
+
+    setDefaultModule: function(module)
+    {
+        this.getDispatcher().setDefaultModule(module);
+        return this;
     }
 });

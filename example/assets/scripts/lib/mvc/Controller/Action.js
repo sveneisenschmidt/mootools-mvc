@@ -63,7 +63,7 @@ var Mvc_Controller_Action = new Class({
     _initView: function()
     {
         var view = new Mvc_View();
-        var scriptPath = this.getFrontController().getModuleDirectory();
+        var scriptPath = this.getFrontController().getModulesDirectory();
 
         if($chk(this.getFrontController().getDispatcher().getModule())) {
             scriptPath += this.getFrontController().getDispatcher().getModule() + '/';

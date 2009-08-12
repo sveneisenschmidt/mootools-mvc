@@ -96,10 +96,16 @@ function bootstrap()
     $app = new Mvc_Application(config);
     $app.bootstrap();
     $app.setRequest(new Mvc_Request_Hash());
-    $app.getFrontController().setModuleDirectory(
+    $app.getFrontController().setModulesDirectory(
         APPLICATION_PATH + 'assets/scripts/usr/'
-    );
+    ).setDefaultModule('default');
 
+    $app.run();
+
+
+}
+
+/*
     $app.getFrontController().addEvent('beforeRouteStartup', function() {
         // this will be fired when a request is done
     });
@@ -118,9 +124,6 @@ function bootstrap()
 
     $app.getFrontController().addEvent('renderingDone', function() {
     // define here your custom class calls for manipualting the rendered response
-    // like setting events etc    
+    // like setting events etc
     });
-
-    $app.run();
-    
-}
+ */
