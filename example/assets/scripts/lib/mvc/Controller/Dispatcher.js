@@ -82,6 +82,9 @@ var Mvc_Controller_Dispatcher = new Class({
      */
     dispatch: function (request, response)
     {
+        var request;
+        var response;
+        
         if(!$chk(request)) {
             new Mvc_Controller_Exception('The Dispatcher(Mvc_Controller_Dispatcher) is missing the request object');
         }
@@ -120,12 +123,10 @@ var Mvc_Controller_Dispatcher = new Class({
     _loadClass: function(controller)
     {
         try {
-            controllerObj = eval('new ' + controller + '()');
-        } catch (exception) {
+            return eval('new ' + controller + '()');
+        } catch (e) {
             new Mvc_Controller_Exception('Controller "' + controller + '" could not be found!');
         }
-
-        return controllerObj;
     }.protect(),
     
     /**
@@ -181,6 +182,7 @@ var Mvc_Controller_Dispatcher = new Class({
     setDefaultModule: function(module)
     {
         this._defaultModule = module;
+        return this;
     },
 
     /**
@@ -336,6 +338,7 @@ var Mvc_Controller_Dispatcher = new Class({
     setError: function(exception)
     {
         this._error = exception;
+        return this;
     },
 
     /**
@@ -369,5 +372,6 @@ var Mvc_Controller_Dispatcher = new Class({
     reset: function()
     {
         this._error = false;
+        return this;
     }
 });
