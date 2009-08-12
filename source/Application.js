@@ -12,7 +12,7 @@
  * @author Sven Eisenschmidt
  * @copyright 2009
  * @version $Id$
- * @license MIT-Style License
+ * @license Custom License
  * @access public
  */
 
@@ -24,7 +24,7 @@ var Mvc_Application = new Class({
 
     _front: null,
 
-    _view: null,
+    _stage: 'prodcution',
     
     /**
      * Mvc_Application::initialize
@@ -47,6 +47,40 @@ var Mvc_Application = new Class({
 
         this.setFrontController(
             new Mvc_Controller_Front());
+    },
+
+    /**
+     * Mvc_Application::setStage
+     *
+     * @param stage
+     * @scope public
+     * @return object
+     */
+    setStage: function(stage)
+    {
+        return this.getFrontController().setStage(stage);
+    },
+
+    /**
+     * Mvc_Application::getStage
+     *
+     * @scope public
+     * @return string
+     */
+    getStage: function()
+    {
+        return this.getFrontController().getStage();
+    },
+
+    /**
+     * Mvc_Application::isStage
+     *
+     * @scope public
+     * @return boolean
+     */
+    isStage: function(stage)
+    {
+        return this.getFrontController().isStage(stage);
     },
 
     /**
@@ -92,12 +126,33 @@ var Mvc_Application = new Class({
     _bootstrapKey: function(key, value)
     {
        // the confguration for the router
-        if(key == 'routes') {
+       if(key == 'routes') {
             this.setRouter(
                 new Mvc_Router(value));
        }
+       if(key == 'stack') {
+            if(value.length > 0) {
+                this.setActionStack(
+                    new Mvc_Controller_Action_Stack(value))
+            }
+       }
 
     }.protect(),
+
+    /**
+     * Mvc_Application::setActionStack
+     *
+     * @param object stack
+     * @scope public
+     * @return void
+     */
+    setActionStack: function(stack)
+    {
+        if(stack._name !== 'Mvc_Controller_Action_Stack') {
+            new Mvc_Controller_Exception('Stack is no Mvc_Controller_Action_Stack!');
+        }
+        this.getFrontController().setActionStack(stack);
+    },
 
     /**
      * Mvc_Application::setRouter
@@ -171,5 +226,27 @@ var Mvc_Application = new Class({
     {
         return this.getFrontController().getRequest();
 
+    },
+
+    /**
+     * Mvc_Application::addEvent
+     *
+     * @scope public
+     * @return object
+     */
+    addEvent: function(type, fn)
+    {
+        return this.getFrontController().addEvent(type, fn);
+    },
+
+    /**
+     * Mvc_Application::addEvents
+     *
+     * @scope public
+     * @return object
+     */
+    addEvents: function(obj)
+    {
+        return this.getFrontController().addEvents(obj);
     }
 });

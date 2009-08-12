@@ -1,0 +1,67 @@
+@charset "UTF-8";
+/*
+    Document   : default.css
+    Created on : 12.08.2009, 00:00:00
+    Author     : Sven Eisenschmidt
+    Copyright  : Same like MooTools-MVC
+*/
+
+@media screen, projection
+{
+    html {
+     overflow: -moz-scrollbars-vertical;
+    }
+
+    .clear {
+        clear: both;
+    }
+
+    /*
+        All Elements
+        @element *
+    */
+    body  {
+        margin: 0;
+        padding: 0;
+    }
+
+    /*
+        Layout
+        @element body div#layout
+    */
+    body div#layout {
+        margin: 10px 25px;
+    }
+
+    body div#layout div.columns {}
+
+    body div#layout div.columns div.col1 {
+        width: 72%;
+        float: left;
+        padding: 0 1%;
+        margin: 1% 0;
+        border-right: 1px solid #666;
+    }
+    body div#layout div.columns div.col2 {
+        width: 23%;
+        margin: 0 0 0 75%;
+        padding: 0 0 0 1%;
+        min-height: 50px;
+    }
+
+    body div#layout div#footer ul {
+        list-style: none;
+        text-align: right;
+        font-size: 11px;
+    }
+
+    body div#layout div#footer ul li {
+        display: inline;
+    }
+
+    body div#layout div#footer ul li ~ li:before {
+        content: ' | ';
+    }
+}
+
+

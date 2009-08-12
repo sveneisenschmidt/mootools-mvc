@@ -12,7 +12,7 @@
  * @author Sven Eisenschmidt
  * @copyright 2009
  * @version $Id$
- * @license MIT-Style License
+ * @license Custom License
  * @access public
  */
 
@@ -22,6 +22,6 @@ var Mvc_Controller_Action_Interface = new Class({
         throw new Error("Interface can't be called itself!");
     },
     dispatch: function(action) {
-        throw new Error("Method can't be called from its Interface. You ahve to implement in the child Class!");
+        throw new Error("Method can't be called from its Interface. You have to implement in the child Class!");
     }
 });

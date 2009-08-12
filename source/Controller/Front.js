@@ -12,7 +12,7 @@
  * @author Sven Eisenschmidt
  * @copyright 2009
  * @version $Id$
- * @license MIT-Style License
+ * @license Custom License
  * @access public
  */
 
@@ -32,7 +32,9 @@ var Mvc_Controller_Front = new Class({
 
     _runOnce: null,
 
-    _baseHtml: null,
+    _stage: null,
+
+    _possibleStages: ['developement', 'production'],
 
     /**
      * Mvc_Controller_Front::initialize
@@ -43,8 +45,14 @@ var Mvc_Controller_Front = new Class({
     initialize: function()
     {
         this._dispatcher = new Mvc_Controller_Dispatcher();
-        this._setBaseHtml(document.getElement('body').get('html'));
+        this._layout = new Mvc_Layout();
+        
         return this;
+    },
+
+    getResponse: function()
+    {
+        return this._response;
     },
 
     /**
@@ -56,7 +64,7 @@ var Mvc_Controller_Front = new Class({
     _reInitialize: function()
     {
         if(this._runOnce != null) {
-            this._resetBaseHtml().run();
+            this.run();
         }
     },
 
@@ -73,28 +81,47 @@ var Mvc_Controller_Front = new Class({
     },
 
     /**
-     * Mvc_Controller_Front::_resetBaseHtml
+     * Mvc_Controller_Front::setStage
      *
-     * @param string html
-     * @scope protected
+     * @param stage
+     * @scope public
      * @return object
      */
-    _resetBaseHtml: function(html)
+    setStage: function(stage)
     {
-        document.getElement('body').set('html', this._baseHtml);
+
+        if(!this._possibleStages.contains(stage.toLowerCase())) {
+            new Mvc_Exception('Stage: "' + stage + '" is not supported!');
+        }
+        this._stage = stage.toLowerCase();
         return this;
     },
 
     /**
-     * Mvc_Controller_Front::_setBaseHtml
+     * Mvc_Controller_Front::geStage
      *
-     * @param string html
-     * @scope protected
-     * @return object
+     * @scope public
+     * @return string
      */
-    _setBaseHtml: function(html)
+    getStage: function()
     {
-        this._baseHtml = html;
+        return this._stage;
+    },
+
+    /**
+     * Mvc_Controller_Front::isStage
+     *
+     * @scope public
+     * @return boolean
+     */
+    isStage: function(stage)
+    {
+        return (stage == this.getStage());
+    },
+
+    getLayout: function()
+    {
+        return this._layout;
     },
     
     /**
@@ -105,10 +132,10 @@ var Mvc_Controller_Front = new Class({
      */
     run: function()
     {
-
         var requestUrl = this.getRequest().getRequestUrl();
         var route = null;
-    
+        this._response = new Mvc_Response_Http();
+        
         this.fireEvent('beforeRouteStartup');
         try {
             route = this.getRouter().getRouteByUrl(requestUrl);
@@ -122,24 +149,45 @@ var Mvc_Controller_Front = new Class({
         params = this._getRouteParamsWithRequest(route);
         this.fireEvent('afterRouteShutdown');
         this.getRequest().setParams(params);
-        this.fireEvent('dispatchLoopStartup');
 
-        // dispatch process
+
+        var module = this.getDispatcher()
+                        .setModule(this.getRequest())
+                            .getModule();
+
+        // configure the layout
+        this.getLayout().setScriptPath(
+            this.getDispatcher().getModulesDirectory() + module  + '/layout/index.html');
+
+        this.fireEvent('dispatchLoopStartup');
+        
+        // dispatch main request
         this.getDispatcher()
                 .setFrontController(this)
-                    .dispatch(this.getRequest(),
-                        new Mvc_Response_Http);
+                    .dispatch(this.getRequest(), this.getResponse());
+
+        // start dipatch loop for action stack items        
+        if(this.hasActionStack() && this.getActionStack().hasItemsForRoute(this.getCurrentRouteName())) {
+            this.fireEvent('dispatchActionStackLoopStartup');
+            this.getActionStack().getItemsForRoute(this.getCurrentRouteName()).each(function(stackItem) {
+                 this._pushActionStack(stackItem);
+            }.bind(this));
+            this.fireEvent('dispatchActionStackLoopShutdown');
+        }
+        
 
         if(this.getDispatcher().hasError()) {
-
-            this._resetBaseHtml();
-
+            this.fireEvent('dispatchThrowsError');
             var html  = '<h2>500 Internal Application Error </h2>';
+
+            if ($chk(this.isStage('developement'))) {
                 html += '<p>' + this.getDispatcher().getError() + '</p>';
+            }
+
                 html += '<hr/>';
                 html += '<p>' + (new Date().toString()) +  '</p>';
 
-                document.getElement('body').set('html', html);
+                this.getLayout().getTarget().set('html', html);
 
             this._resetDispatcher();
             
@@ -147,14 +195,27 @@ var Mvc_Controller_Front = new Class({
 
             this.fireEvent('dispatchLoopShutdown');
 
+            // starts the Layout
+            this.getLayout().start();
+            
             var content = this.getDispatcher()
                                   .getResponse()
                                       .getResponseBody();
 
             content.each(function(entry) {
-                var target = document.getElement(entry.target);
-                    target.set('html', target.get('html') + entry.content);
-            });
+                var target = this.getLayout().getElement(entry.target);
+                    target.set('html', target.get('html') + entry.content);                    
+            }.bind(this));
+
+            var helpers = this.getDispatcher()
+                                 .getResponse()
+                                    .getViewHelpers();
+
+            if($chk(helpers)) {
+                helpers.each(function(helper) {
+                    helper.execute(this);
+                }.bind(this));
+            }
 
             this.fireEvent('renderingDone');
         }
@@ -357,9 +418,81 @@ var Mvc_Controller_Front = new Class({
         return this.getDispatcher().getModulesDirectory();
     },
 
+    /**
+     * Mvc_Controller_Front::setDefaultModule
+     *
+     * @param string module
+     * @scope public
+     * @return object
+     */
     setDefaultModule: function(module)
     {
         this.getDispatcher().setDefaultModule(module);
         return this;
-    }
+    },
+
+    /**
+     * Mvc_Controller_Front::setLayoutTarget
+     *
+     * @param string target
+     * @scope public
+     * @return object
+     */
+    setLayoutTarget: function(target)
+    {
+        this.getLayout().setTarget(target);
+        return this;
+    },
+
+    /**
+     * Mvc_Controller_Front::getActionStack
+     *
+     * @scope public
+     * @return object
+     */
+    getActionStack: function() {
+        return this._actionStack;
+    },
+
+    /**
+     * Mvc_Controller_Front::setActionStack
+     *
+     * @param object stack
+     * @scope public
+     * @return object
+     */
+    setActionStack: function(stack)
+    {
+        this._actionStack = stack;
+        return this;
+    },
+
+    /**
+     * Mvc_Controller_Front::hasActionStack
+     *
+     * @scope public
+     * @return bollean
+     */
+    hasActionStack: function()
+    {
+        return $chk(this.getActionStack());
+    },
+
+    /**
+     * Mvc_Controller_Front::_pushActionStack
+     *
+     * @scope protected
+     * @return object
+     */
+    _pushActionStack: function(stackItem)
+    {
+        var stackRequest = new Mvc_Request_Standard();
+            stackRequest.setParams(stackItem);
+            
+        this.getDispatcher()
+                .setFrontController(this)
+                    .dispatch(stackRequest, this.getResponse());
+
+        return this;
+    }.protect()
 });

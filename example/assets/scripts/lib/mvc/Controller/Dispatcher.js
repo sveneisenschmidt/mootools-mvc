@@ -12,7 +12,7 @@
  * @author Sven Eisenschmidt
  * @copyright 2009
  * @version $Id$
- * @license MIT-Style License
+ * @license Custom License
  * @access public
  */
 
@@ -48,10 +48,7 @@ var Mvc_Controller_Dispatcher = new Class({
      * @scope public
      * @return void
      */
-    initialize: function() 
-    {
-        this.setResponse(new Mvc_Response_Http());
-    },
+    initialize: function()  {},
 
     /**
      * Mvc_Controller_Dispatcher::setResponse
@@ -94,10 +91,12 @@ var Mvc_Controller_Dispatcher = new Class({
             this.setResponse(response);
         }
 
-        this.setModule(request);
-
         actionMethod     = this.getActionMethod(request);
         controllerClass  = this.getControllerClass(request);
+
+        if(this.getFrontController().isStage('developement') && $chk(console)) {
+            console.info('dispatch: ' + controllerClass + '::' + actionMethod + '!');
+        }
 
         var controller;
 
@@ -112,9 +111,7 @@ var Mvc_Controller_Dispatcher = new Class({
             controller.dispatch(actionMethod);
 
             return this;
-
-            //get Reponse
-
+            
         } catch (exception) {
             this.setError(exception);
             return this;
@@ -132,29 +129,6 @@ var Mvc_Controller_Dispatcher = new Class({
         }
 
         return controllerObj;
-    },
-
-    /**
-     * Mvc_Controller_Front:getResponse
-     *
-     * @scope public
-     * @return object
-     */
-    getResponse: function()
-    {
-        return this._response;
-    },
-
-    /**
-     * Mvc_Controller_Front:setResponse
-     *
-     * @param object response
-     * @scope public
-     * @return void
-     */
-    setResponse: function(response)
-    {
-        this._response = response;
     },
     
     /**

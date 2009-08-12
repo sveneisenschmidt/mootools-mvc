@@ -1,26 +1,35 @@
 <div id="layout">
     <div id="header">
-        <h1>MVC App</h1>
+        <h1>MooTools MVC (MooVc)</h1>
         <hr/>
     </div>
     <div id="navigation">
         <p><strong>Navigation: </strong></p>
         <ul>
-            <li><a href="#/">Startseite</a></li>
+            <li><a href="#/">Frontpage</a></li>
             <li><a href="#/news">News</a></li>
             <li><a href="#/news/10-08-2009/news-test-with-params.html">News with Params</a></li>
-            <li><a href="#/comments/recent">Page with Data from an Model</a></li>
+            <li><a href="#/comments/recent">Page with Data from a Model</a></li>
             <li><a href="#/crazy-url">404 Test with crazy wrong url</a></li>
             <li><a href="#/raise-error">Test Error Controller with defect Route!</a></li>
         </ul>
         <hr/>
     </div>
     <div class="columns">
-        <div class="col1" id="main">
-            MAIN
+        <div class="col1" id="content">
+            <small>target: #content</small>
         </div>
         <div class="col2" id="sidebar">
-            SIDEBAR
+            <small>target: #sidebar</small>
         </div>
+        <!-- fast but ugly clearing hack -->
+        <hr class="clear"/>
+    </div>
+    <div id="footer">
+        <ul>
+            <li>2009 &copy</li>
+            <li>Sven Eisenschmidt</li>
+            <li><a href="http://unsicherheitsagent.de">http://unsicherheitsagent.de</a></li>
+        </ul>
     </div>
 </div>

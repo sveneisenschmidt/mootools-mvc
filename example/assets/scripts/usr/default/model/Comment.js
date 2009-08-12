@@ -10,7 +10,7 @@ var Default_Comments_Model = new Class({
 
     Implements: [Mvc_Class_Base],
 
-    _name: 'Model_Comments',
+    _name: 'Default_Comments_Model',
 
     _data: null,
 

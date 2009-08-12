@@ -12,7 +12,7 @@
  * @author Sven Eisenschmidt
  * @copyright 2009
  * @version $Id$
- * @license MIT-Style License
+ * @license Custom License
  * @access public
  */
 

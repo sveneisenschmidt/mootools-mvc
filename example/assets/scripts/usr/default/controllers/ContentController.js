@@ -22,6 +22,12 @@ var ContentController = new Class({
     {
         this.getView().assign('params', this._getParams());
         this.render();
+    },
+
+    sidebarListAction: function()
+    {
+        this.getView().assign('params', this._getParams());
+        this.render();
     }
 
 });

@@ -12,7 +12,7 @@
  * @author Sven Eisenschmidt
  * @copyright 2009
  * @version $Id$
- * @license MIT-Style License
+ * @license Custom License
  * @access public
  */
 
@@ -185,6 +185,11 @@ var Mvc_Controller_Action = new Class({
         var html = this.getView().render(
                         this.getViewFile());
 
+        if($chk(this.getView().getHelpers())) {
+            this.getResponse().appendHelpers(
+                this.getView().getHelpers());
+        }
+
         this.getResponse()
             .appendBody(this.getViewTarget(), html);
     },
@@ -198,13 +203,16 @@ var Mvc_Controller_Action = new Class({
     getViewFile: function()
     {
         var filePath = null;
+        if($chk(this._params['view'])) {
+            return this._params['view'];
+        }
         var currentRoute = this.getFrontController().getCurrentRouteName();
 
         filePath = this._getParam('controller') + '/' + this._getParam('action') + '.html';
 
         if($chk(this.config.views)) {
             this.config.views.each(function(item) {
-                if($chk(item[currentRoute]) && $chk(item[currentRoute]['view']) && filePath == null) {
+                if($chk(item[currentRoute]) && $chk(item[currentRoute]['view']) && filePath != null) {
                     filePath = item[currentRoute]['view'];
                 }                
             });
@@ -221,10 +229,15 @@ var Mvc_Controller_Action = new Class({
      */
     getViewTarget: function()
     {
+
         var target = null;
+        if($chk(this._params['target'])) {
+            return this._params['target'];
+        }
+        
         var currentRoute = this.getFrontController().getCurrentRouteName();
 
-        if($chk(this.config.views)) {
+        if($chk(this.config.views) && !$chk(target)) {
             this.config.views.each(function(item) {
                 if($chk(item[currentRoute]) && $chk(item[currentRoute]['target']) && target == null) {
                     target = item[currentRoute]['target'];

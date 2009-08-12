@@ -12,7 +12,7 @@
  * @author Sven Eisenschmidt
  * @copyright 2009
  * @version $Id$
- * @license MIT-Style License
+ * @license Custom License
  * @access public
  */
 
@@ -172,7 +172,6 @@ var Mvc_Request_Abstract = new Class({
      */
     getAllParams: function()
     {
-        
         return this._requestParams;
     },
 
@@ -221,5 +220,17 @@ var Mvc_Request_Abstract = new Class({
      {
          params = this.getAllParams();
          return params['module'];
+     },
+
+    /**
+     * Mvc_Request_Abstract::getTarget
+     *
+     * @scope public
+     * @return string
+     */
+     getTarget: function()
+     {
+         params = this.getAllParams();
+         return params['target'];
      }
 });

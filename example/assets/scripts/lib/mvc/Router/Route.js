@@ -12,7 +12,7 @@
  * @author Sven Eisenschmidt
  * @copyright 2009
  * @version $Id$
- * @license MIT-Style License
+ * @license Custom License
  * @access public
  */
 
@@ -148,11 +148,13 @@ var Mvc_Router_Route = new Class({
             main = main.substr(0, main.length - 1);
         }
 
-        route.defaults.each(function(item, index){
-            key = this._getIdentifier(item);
-            value = item[key].toString();
-            params[key] = value;
-        }.bind(this));
+        if($chk(route.defaults)) {
+            route.defaults.each(function(item, index){
+                key = this._getIdentifier(item);
+                value = item[key].toString();
+                params[key] = value;
+            }.bind(this));
+        }
 
         if(tmpParams != null) {
             tmpParams.each(function(prop){

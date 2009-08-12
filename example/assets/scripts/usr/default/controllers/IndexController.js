@@ -14,6 +14,8 @@ var IndexController = new Class({
 
     indexAction: function()
     {
+        
+        this.getView().getHelper('headtitle').preserveOldTitle(true).set('Startpage', 'append');
 
         var router = this.getFrontController().getRouter();
         

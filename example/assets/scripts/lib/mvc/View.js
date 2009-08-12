@@ -12,7 +12,7 @@
  * @author Sven Eisenschmidt
  * @copyright 2009
  * @version $Id$
- * @license MIT-Style License
+ * @license Custom License
  * @access public
  */
 
@@ -23,6 +23,8 @@ var Mvc_View = new Class({
     _name: 'Mvc_View',
 
     _scriptPath: null,
+
+    _helpers: {},
 
     vars: {},
 
@@ -36,7 +38,39 @@ var Mvc_View = new Class({
      */
     initialize: function()
     {
-        this._setupRenderContainer();
+        return this._setupRenderContainer();
+    },
+
+    /**
+     * Mvc_Controller_Action::getHelpers
+     *
+     * @scope public
+     * @return object
+     */
+    getHelpers: function()
+    {
+        return this._helpers;
+    },
+
+    /**
+     * Mvc_Controller_Action::getHelper
+     *
+     * @scope public
+     * @return object
+     */
+    getHelper: function(helper)
+    {
+        var helperName = helper.toLowerCase();
+            helperName = helperName[0].toUpperCase() + helperName.substr(1, helperName.length);
+
+        var helper = helper.toLowerCase();
+
+        if(!$chk(this._helpers[helper.toLowerCase()])) {
+            this._helpers[helper] = eval('new Mvc_View_Helper_' + helperName);
+            return this._helpers[helper];
+        }
+        
+        return this._helpers[helper];
     },
 
     /**
@@ -55,6 +89,8 @@ var Mvc_View = new Class({
             'class': '_mvcRenderContainer',
             'text': 'test'
         }).inject(document.getElement('body'), 'bottom');
+
+        return this;
     }.protect(),
 
     /**
