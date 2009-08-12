@@ -41,7 +41,7 @@ var Mvc_Controller_Action = new Class({
      */
     initialize: function(response)
     {
-        this.config = new Mvc_Config().getInstance().get('config');
+        this.config = new Mvc_Registry().getInstance().get('config');
     },
 
     setResponse: function(response)

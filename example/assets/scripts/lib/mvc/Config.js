@@ -1,14 +1,14 @@
 /**
  *
- * @package Mvc_Config
- * @subpackage Mvc_Config
+ * @package Mvc_Registry
+ * @subpackage Mvc_Registry
  */
 
 /**
- * Mvc_Config
+ * Mvc_Registry
  *
- * @package Mvc_Config
- * @subpackage Mvc_Configw
+ * @package Mvc_Registry
+ * @subpackage Mvc_Registry
  * @author Sven Eisenschmidt
  * @copyright 2009
  * @version $Id$
@@ -16,21 +16,15 @@
  * @access public
  */
 
-var Mvc_Config = new Class({
+var Mvc_Registry = new Class({
 
     Implements: [Mvc_Class_Base],
 
-    _name: 'Mvc_Config',
+    _name: 'Mvc_Registry',
 
     _storage: {},
 
-    initialize: function(type)
-    {
-        if(!$chk(type)) {
-            return this;
-        }
-        return eval('new Mvc_Config_' + type + '()');
-    },
+    initialize: function(type) {},
 
     store: function(key, value)
     {
@@ -44,11 +38,11 @@ var Mvc_Config = new Class({
 
     getInstance: function()
     {
-        if(!$chk(window._mvcConfig)) {
-            window._mvcConfig = new Mvc_Config();
-            return window._mvcConfig;
+        if(!$chk(window._mvcRegistry)) {
+            window._mvcRegistry = new Mvc_Registry();
+            return window._mvcRegistry;
         }
 
-        return window._mvcConfig;
+        return window._mvcRegistry;
     }
 });

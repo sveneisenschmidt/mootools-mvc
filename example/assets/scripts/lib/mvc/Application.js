@@ -41,7 +41,7 @@ var Mvc_Application = new Class({
 
         this._config = config;
 
-        new Mvc_Config().getInstance().store(
+        new Mvc_Registry().getInstance().store(
             'config', config
         );
 
