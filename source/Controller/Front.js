@@ -50,6 +50,12 @@ var Mvc_Controller_Front = new Class({
         return this;
     },
 
+    /**
+     * Mvc_Controller_Front::getResponse
+     *
+     * @scope public
+     * @return object
+     */
     getResponse: function()
     {
         return this._response;
@@ -140,15 +146,13 @@ var Mvc_Controller_Front = new Class({
         try {
             route = this.getRouter().getRouteByUrl(requestUrl);
         } catch (e) {
-            this.dispatch('404');
-            return;
+            return this._forward('404');
         }
 
         this._setCurrentRouteName(route.getRouteName());
-        
-        params = this._getRouteParamsWithRequest(route);
         this.fireEvent('afterRouteShutdown');
-        this.getRequest().setParams(params);
+        this.getRequest().setParams(
+            this._getRouteParamsWithRequest(route));
 
 
         var module = this.getDispatcher()
@@ -343,17 +347,6 @@ var Mvc_Controller_Front = new Class({
         return this._dispatcher;
     },
 
-    /**
-     * Mvc_Controller_Front::dispatch
-     *
-     * @param string path
-     * @scope public
-     * @return object
-     */
-    dispatch: function(path)
-    {
-        return this._forward(path);
-    },
 
     /**
      * Mvc_Controller_Front::_forward
