@@ -113,7 +113,7 @@ var Mvc_Application = new Class({
         }
         
         this.getFrontController().run();
-
+        return this;
     },
     
     /**
