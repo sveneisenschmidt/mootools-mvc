@@ -1,19 +1,20 @@
 MooTools MVC - A MVC approach for the MooTools Javascript framework
 
 [License]
-MIT-style license.
+Custom style license. (see LICENSE file)
 
 [Copyright]
 Copyright (c) 2009 Sven Eisenschmidt (http://unsicherheitsagent.de/)
 
 [Thank You]
-I would like to thank the guys behind MooTools and Zend Framework for the awesome job they did in
-giving us such great frameworks.
-
+Special thanks to the people behind MooTools and the Zend Framework 
+for the passionate and awesome work they did, in giving us such 
+powerful and great frameworks.
 
 [Running the provided example]
 
-For running the example provided in the folder ./example you need to point
-a running Apache instance (localhost) to the example folder (i.e. http://localhost/mootools-mvc/example/).
-The Apache needs to have PHP installed and in httpd.conf or your virtual hosts the property  'AllowOverride'
-should be set to all.
+For running the example provided in the folder ./example you need to 
+point a running Apache instance (localhost) to the example folder 
+(i.e. http://localhost/mootools-mvc/example/). The Apache needs to 
+have PHP installed and in httpd.conf or your virtual hosts the 
+property  'AllowOverride' should be set to all.
