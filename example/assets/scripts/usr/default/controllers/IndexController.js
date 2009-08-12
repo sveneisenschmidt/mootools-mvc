@@ -19,7 +19,7 @@ var IndexController = new Class({
 
         var router = this.getFrontController().getRouter();
         
-        this.getView().assign('title', 'Index Seite!')
+        this.getView().assign('title', 'Startpage')
         this.getView().assign('links', [
            {
                text: 'Test Link 1',
