@@ -160,7 +160,7 @@ var config = {
                             'href' : '#/news/10-08-2009/news-test-with-params.html'
                         },
                         {
-                            'text': 'Page with Data from a Model and parsed external feed',
+                            'text': 'Page with Data from a Model and parsed external GitHub feed (may load slow!)',
                             'href' : '#/comments/recent'
                         },
                         {
@@ -168,7 +168,7 @@ var config = {
                             'href' : '#/not-existing-url'
                         },
                         {
-                            'text': 'Call a not well configured route',
+                            'text': 'Call a not well configured route (staging: testing)',
                             'href' : '#/raise-error'
                         }
                     ]
