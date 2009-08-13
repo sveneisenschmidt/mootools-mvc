@@ -153,16 +153,28 @@ var Mvc_View = new Class({
             }
             this[propName] = this.vars[propName];
         }
-        this.vars = null;
         
-        this._getRenderContainer().set('html', request.response.text);
-        this._getRenderContainer().getElements('script').each(function(script){
+        this.vars = null;
+
+        var injectContainer = new Element('div', {
+            'html': request.response.text,
+            'class': 'inject-container'
+        }).inject(this._getRenderContainer());
+
+        injectContainer.getElements('script').each(function(script){
             eval(script.get('text'));
             script.dispose();
         }.bind(this));
 
-        var html = this._getRenderContainer().get('html');
-        this._getRenderContainer().set('html', '');
+        var html = injectContainer.clone().cloneEvents(injectContainer);
+        var htmlElements = html.getElements('*');
+        
+        injectContainer.getElements('*').each(function(injectItem, index) {
+            htmlElements[index].cloneEvents(injectItem);
+        });
+
+        injectContainer.dispose();
+
         return html;
     },
 
@@ -186,7 +198,7 @@ var Mvc_View = new Class({
      */
     getElement: function(selector)
     {
-        return this._getRenderContainer().getElement(selector);
+        return this._getRenderContainer().getElement('.inject-container').getElement(selector);
     },
 
     /**
@@ -198,6 +210,6 @@ var Mvc_View = new Class({
      */
     getElements: function(selector)
     {
-        return this._getRenderContainer().getElements(selector);
+        return this._getRenderContainer().getElement('.inject-container').getElements(selector);
     }
 });

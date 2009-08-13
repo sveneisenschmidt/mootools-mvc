@@ -18,6 +18,11 @@
 <script type="javascript">
 
     this.getElement('h2').set('text', this.title);
+
+    this.getElement('h2').addEvent('click', function() {
+        this.setStyle('color', 'red');
+    });
+
     /*
     var Ul = new Element('ul');
     this.links.each(function(item){

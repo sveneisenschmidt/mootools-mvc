@@ -85,7 +85,7 @@ var Mvc_Controller_Action = new Class({
             scriptPath += this.getFrontController().getDispatcher().getModule() + '/';
         }
 
-        view.setScriptPath(scriptPath + 'views/');
+        view.setScriptPath(scriptPath + 'views/scripts/');
         this.setView(view);
         
     }.protect(),

@@ -203,9 +203,9 @@ var Mvc_Controller_Front = new Class({
                                       .getResponseBody();
 
             content.each(function(entry) {
-                var target = this.getLayout().getElement(entry.target);
-                    target.set('html', target.get('html') + entry.content);                    
-                        }.bind(this));
+                    entry.content.inject(this.getLayout()
+                        .getElement(entry.target), 'bottom');
+            }.bind(this));
 
             var helpers = this.getDispatcher()
                                  .getResponse()
