@@ -15,11 +15,11 @@ var IndexController = new Class({
     indexAction: function()
     {
         
-        this.getView().getHelper('headtitle').preserveOldTitle(true).set('Startpage', 'append');
+        this.getView().getHelper('headtitle').preserveOldTitle(true).set('Home', 'append');
 
         var router = this.getFrontController().getRouter();
         
-        this.getView().assign('title', 'Startpage')
+        this.getView().assign('title', 'Home')
         this.getView().assign('links', [
            {
                text: 'Test Link 1',

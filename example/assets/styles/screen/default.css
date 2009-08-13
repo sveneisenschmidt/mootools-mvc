@@ -16,6 +16,10 @@
         clear: both;
     }
 
+    a:visited {
+        color: blue;
+    }
+
     /*
         All Elements
         @element *
@@ -25,43 +29,88 @@
         padding: 0;
     }
 
+    p {
+        line-height: 150%;
+    }
+    
     /*
         Layout
-        @element body div#layout
+        @element div#layout
     */
-    body div#layout {
-        margin: 10px 25px;
+    div#layout {
+        margin: 10px auto;
+        width: 960px;
     }
 
-    body div#layout div.columns {}
+    div#layout div.columns {}
 
-    body div#layout div.columns div.col1 {
-        width: 72%;
+    div#layout div.columns div.col1 {
+        width: 52%;
         float: left;
-        padding: 0 1%;
+        padding: 0 10% 0 1%;
         margin: 1% 0;
         border-right: 1px solid #666;
     }
-    body div#layout div.columns div.col2 {
-        width: 23%;
-        margin: 0 0 0 75%;
+    div#layout div.columns div.col2 {
+        width: 33%;
+        margin: 0 0 0 65%;
         padding: 0 0 0 1%;
         min-height: 50px;
     }
 
-    body div#layout div#footer ul {
+    div#layout div#footer ul {
         list-style: none;
         text-align: right;
         font-size: 11px;
     }
 
-    body div#layout div#footer ul li {
+    div#layout div#footer ul li {
         display: inline;
     }
 
-    body div#layout div#footer ul li ~ li:before {
+    div#layout div#footer ul li ~ li:before {
         content: ' | ';
     }
+
+    /*
+        Header
+        @element div#layout div#header
+    */
+
+    div#layout div#header {
+
+    }
+
+    div#layout div#header h1 {
+        margin: 0;
+        padding: 0;
+    }
+
+    /*
+        Navigation
+        @element div#layout div#navigation
+    */
+    div#layout div#navigation {
+        margin: 0 0 30px 0;
+    }
+
+    div#layout div#navigation ul {
+        list-style: none;
+        text-align: right;
+    }
+
+    div#layout div#navigation ul li {
+        display: inline;
+    }
+
+    div#layout div#navigation ul li a.active {
+        color: red;
+    }
+
+    div#layout div#navigation ul li ~ li:before {
+        content: ' | ';
+    }
+
 }
 
 

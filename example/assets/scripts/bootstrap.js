@@ -44,6 +44,15 @@ var config = {
             }
         },
         {
+            'examples': {
+                'route': 'examples',
+                'defaults': [
+                    {'controller': 'example'},
+                    {'action': 'index'}
+                ]
+            }
+        },
+        {
             'recent': {
                 'route': 'comments/recent/:amount',
                 'defaults': [
@@ -107,10 +116,10 @@ var config = {
     *   ActionStack
     *
     *   In this section you can define additional Controllers/Actions
-    *   to be executed. You have to define at least the controller, action
-    *   and target.
+    *   to be executed. You have to define at least the controller, action,
+    *   the VIEW!! and target.
     *
-    *   You can set additional the view, module and additional params.
+    *   You can set additional the module and params.
     *   To switch the stack for a specific route of you declare the route and set the content to []
     */
    /*
@@ -120,6 +129,7 @@ var config = {
                 {
                     'controller': '{your controller}',
                     'action'    : '{the action}',
+                    'view'      : 'example/example.html',
                     'target'    : '{the element (i.e. #sidebar)}',
                     'module'    : '{the name of the module}',
                     'param1'    : 'value1',
@@ -134,14 +144,46 @@ var config = {
     */
     'stack': [
         {
-            'default': [
+           'default': [
                 {
-                    'controller': 'content',
+                    'controller': 'example',
                     'action'    : 'sidebar-list',
                     'target'    : '#sidebar',
-                    'view'      : 'content/sidebar-list.html',
-                    'param1'    : 'value1',
-                    'param2'    : 'value2'
+                    'view'      : 'example/sidebar-list.html',
+                    'links'     : [
+                        {
+                            'text': 'Simple page',
+                            'href' : '#/news'
+                        },
+                        {
+                            'text': 'Simple page with params',
+                            'href' : '#/news/10-08-2009/news-test-with-params.html'
+                        },
+                        {
+                            'text': 'Page with Data from a Model and parsed external feed',
+                            'href' : '#/comments/recent'
+                        },
+                        {
+                            'text': '404 Test with wrong url',
+                            'href' : '#/not-existing-url'
+                        },
+                        {
+                            'text': 'Call a not well configured route',
+                            'href' : '#/raise-error'
+                        }
+                    ]
+                }
+            ],
+            'recent': [
+                {
+                    'controller': 'feed',
+                    'action'    : 'list-feed',
+                    'target'    : '#sidebar',
+                    'view'      : 'feed/list-feed.html',
+                    'feed'      : APPLICATION_PATH + 'assets/scripts/usr/default/data/feed-proxy/github-recent-commits.php',
+                    'type'      : 'rss',
+                    'amount'    : '5',
+                    'title'     : 'recent commits from github.com'
                 }
             ]
         },
@@ -168,7 +210,17 @@ function bootstrap()
     ).setDefaultModule('default').setLayoutTarget(
         document.getElement('body')
     );
+        
     // add here your events (see below for the list of events)
+    $app.addEvents({
+        'renderingDone': function(){
+            $('navigation').getElements('a').each(function(link) {
+                if(link.get('href') == window.location.hash)
+                    link.addClass('active');
+            });
+        }
+    });
+
     $app.run();
 
 }

@@ -93,11 +93,7 @@ var Mvc_Controller_Dispatcher = new Class({
         } else {
             this.setResponse(response);
         }
-
-        if(this.getFrontController().isStage('developement') && $chk(console)) {
-            console.info('dispatch: ' + this.getControllerClass(request) + '::' + this.getActionMethod(request) + '!');
-        }
-
+        
         try {
 
             this._loadClass(this.getControllerClass(request))
