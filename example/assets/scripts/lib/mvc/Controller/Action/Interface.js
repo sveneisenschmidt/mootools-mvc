@@ -17,11 +17,25 @@
  */
 
 var Mvc_Controller_Action_Interface = new Class({
-    initialize: function(request, response)
+
+    /**
+     * Mvc_Controller_Action_Interface::initialize
+     *
+     * @scope public
+     * @return void
+     */
+    initialize: function()
     {
         throw new Error("Interface can't be called itself!");
     },
-    dispatch: function(action) {
+
+    /**
+     * Mvc_Controller_Action_Interface::dispatch
+     *
+     * @scope public
+     * @return void
+     */
+    dispatch: function(n) {
         throw new Error("Method can't be called from its Interface. You have to implement in the child Class!");
     }
 });

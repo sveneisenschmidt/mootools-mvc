@@ -73,7 +73,7 @@ var Mvc_Layout = new Class({
     _setLayoutHtml: function(html)
     {
         this._layoutHtml = html;
-    },
+    }.protect(),
 
     /**
      * Mvc_Layout::_getLayoutFile

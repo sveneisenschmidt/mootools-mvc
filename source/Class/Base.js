@@ -21,8 +21,10 @@ var Mvc_Class_Base = new Class({
     _name: 'Mvc_Class_Base',
 
     /**
-     * Constructor
+     * Mvc_Class_Base::getClassName
      *
+     * @scope public
+     * @return string
      */
     getClassName: function()
     {

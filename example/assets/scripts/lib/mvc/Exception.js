@@ -22,10 +22,6 @@ var Mvc_Exception = new Class({
 
     _name: 'Mvc_Exception',
 
-    /**
-     * Constructor
-     *
-     */
     initialize: function(msg)
     {
         throw new Error(msg);

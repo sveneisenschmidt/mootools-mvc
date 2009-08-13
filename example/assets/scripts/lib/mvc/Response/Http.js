@@ -28,8 +28,5 @@ var Mvc_Response_Http = new Class({
      * @scope public
      * @return void
      */
-    initialize: function()
-    {
-       
-    }
+    initialize: function() {}
 });
