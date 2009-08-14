@@ -32,6 +32,9 @@ var Mvc_Request_Hash = new Class({
      */
     initialize: function()
     {
+
+        if(!$chk(window.location.hash)) window.location.hash = '#/';
+
         this.setRequestData(window.location);
 
         window.addEvent('hashChanged', function() {
