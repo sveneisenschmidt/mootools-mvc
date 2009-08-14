@@ -18,8 +18,6 @@
 
 var Mvc_Request_Abstract = new Class({
 
-    Implements:[ Mvc_Class_Base, Events],
-
     _name: 'Mvc_Request_Abstract',
 
     _requestUrl: null,

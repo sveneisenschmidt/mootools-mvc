@@ -18,8 +18,6 @@
 
 var Mvc_Registry = new Class({
 
-    Implements: [Mvc_Class_Base],
-
     _name: 'Mvc_Registry',
 
     _storage: {},

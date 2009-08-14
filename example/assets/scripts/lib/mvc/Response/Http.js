@@ -18,7 +18,7 @@
 
 var Mvc_Response_Http = new Class({
 
-    Implements: [Mvc_Response_Abstract],
+    Implements: Mvc_Response_Abstract,
 
     _name: 'Mvc_Response_Http',
 

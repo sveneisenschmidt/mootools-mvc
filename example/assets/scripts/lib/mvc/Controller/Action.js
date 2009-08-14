@@ -19,7 +19,7 @@
 
 var Mvc_Controller_Action = new Class({
 
-    Implements: [Mvc_Class_Base, Mvc_Controller_Action_Interface],
+    Implements: Mvc_Controller_Action_Interface,
 
     _name: 'Mvc_Controller_Action',
 
@@ -104,7 +104,7 @@ var Mvc_Controller_Action = new Class({
         try {
             eval('this.' + method + '()');
         } catch (e) {
-            new Mvc_Controller_Exception(this.getClassName() + ': ' + e.toString());
+            new Mvc_Controller_Exception(this._name + ': ' + e.toString());
         }
     },
 

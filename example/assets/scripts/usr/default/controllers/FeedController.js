@@ -9,7 +9,7 @@
 
 var FeedController = new Class({
 
-    Implements: [Mvc_Controller_Action],
+    Implements: Mvc_Controller_Action,
 
     _name: 'FeedController',
 

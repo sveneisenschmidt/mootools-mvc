@@ -8,8 +8,6 @@
 
 var Default_Feed_Parser_Model = new Class({
 
-    Implements: [Mvc_Class_Base, Events],
-
     _name: 'Default_Feed_Parser_Model',
 
     _response: null,

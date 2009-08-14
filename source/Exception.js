@@ -18,8 +18,6 @@
 
 var Mvc_Exception = new Class({
 
-    Implements: Mvc_Class_Base,
-
     _name: 'Mvc_Exception',
 
     initialize: function(msg)

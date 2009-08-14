@@ -18,8 +18,6 @@
 
 var Mvc_View = new Class({
 
-    Implements: [Mvc_Class_Base],
-
     _name: 'Mvc_View',
 
     _scriptPath: null,

@@ -18,8 +18,6 @@
 
 var Mvc_View_Helper_Abstract = new Class({
 
-    Implements: [Mvc_Class_Base],
-
     /**
      * Mvc_View_Helper_Abstract::execute
      *

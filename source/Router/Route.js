@@ -19,8 +19,6 @@
 
 var Mvc_Router_Route = new Class({
 
-    Implements: Mvc_Class_Base,
-
     _name: 'Mvc_Router_Route',
 
     _routeName: $empty,

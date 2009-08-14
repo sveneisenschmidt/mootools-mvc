@@ -18,7 +18,7 @@
 
 var Mvc_Controller_Front = new Class({
 
-    Implements: [Mvc_Class_Base, Events],
+    Implements: Events,
 
     _name: 'Mvc_Controller_Front',
 
@@ -352,7 +352,7 @@ var Mvc_Controller_Front = new Class({
      */
     _forward: function(path)
     { 
-        if(this.getRequest().getClassName() == 'Mvc_Request_Hash') {
+        if(this.getRequest()._name == 'Mvc_Request_Hash') {
             window.location.hash = '#/' + path;
             return this;
         }

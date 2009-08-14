@@ -18,8 +18,6 @@
 
 var Mvc_Router = new Class({
 
-    Implements: Mvc_Class_Base,
-
     _name: 'Mvc_Router',
 
     _config: $empty,

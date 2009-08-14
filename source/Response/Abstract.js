@@ -18,8 +18,6 @@
 
 var Mvc_Response_Abstract = new Class({
 
-    Implements: [Mvc_Class_Base],
-
     _name: 'Mvc_Response_Abstract',
 
     _responseBody: [],

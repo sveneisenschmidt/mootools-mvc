@@ -18,8 +18,6 @@
 
 var Mvc_View_Helper_Headtitle = new Class({
 
-    Implements: [Mvc_Class_Base],
-
     _name: 'Mvc_View_Helper_Headtitle',
 
     _headTitle: '',

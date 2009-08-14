@@ -18,7 +18,7 @@
 
 var Mvc_Request_Hash = new Class({
 
-    Implements: [Mvc_Class_Base, Mvc_Request_Abstract],
+    Implements: [Mvc_Request_Abstract, Events],
 
     _name: 'Mvc_Request_Hash',
 

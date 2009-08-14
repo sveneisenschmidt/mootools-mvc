@@ -18,7 +18,7 @@
 
 var Mvc_Request_Standard = new Class({
 
-    Implements: [Mvc_Class_Base, Mvc_Request_Abstract],
+    Implements: Mvc_Request_Abstract,
 
     _name: 'Mvc_Request_Standard'
 });

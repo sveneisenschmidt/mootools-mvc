@@ -18,8 +18,6 @@
 
 var Mvc_Layout = new Class({
 
-    Implements: [Mvc_Class_Base],
-
     _name: 'Mvc_Layout',
 
     _scriptPath: null,

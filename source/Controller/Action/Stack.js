@@ -19,8 +19,6 @@
 
 var Mvc_Controller_Action_Stack = new Class({
 
-    Implements: [Mvc_Class_Base],
-
     _name: 'Mvc_Controller_Action_Stack',
 
     _items: null,

@@ -18,7 +18,7 @@
 
 var Mvc_Controller_Dispatcher = new Class({
 
-    Implements: [Mvc_Class_Base, Events],
+    Implements: Events,
 
     _name: 'Mvc_Controller_Dispatcher',
 
