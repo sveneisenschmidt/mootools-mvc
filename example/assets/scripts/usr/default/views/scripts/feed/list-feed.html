@@ -13,7 +13,6 @@
     var entryList = new Element('ul');
 
     this.items.each(function(entry) {
-        console.log(entry);
         new Element('li').grab(new Element('div').grab(new Element('a', {
             'text': entry.getElement('title').get('text'),
             'href': entry.getElement('link').get('href')
@@ -21,7 +20,6 @@
             'html': 'Author:  ' + entry.getElement('author').get('text') + ' ' +
                     'Updated: <em>' + entry.getElement('updated').get('text') + '</em>'
         })).inject(entryList);
-            
     });
 
     this.getElement('div.list-feed-view div.inner-content').grab(entryList);
