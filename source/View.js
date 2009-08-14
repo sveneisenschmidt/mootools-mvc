@@ -63,7 +63,7 @@ var Mvc_View = new Class({
 
         var helper = helper.toLowerCase();
 
-        if(!$chk(this._helpers[helper.toLowerCase()])) {
+        if(!$chk(this._helpers[helper.toLowerCase()])){
             this._helpers[helper] = eval('new Mvc_View_Helper_' + helperName);
             return this._helpers[helper];
         }
@@ -145,13 +145,13 @@ var Mvc_View = new Class({
             new Mvc_View_Exception('No File for View found under: "' + fullPath + '"!');
         }
 
-        for(var propName in this.vars) {
-            if($chk(this[propName])) {
+        $each(this.vars, function(value, key) {
+            if($chk(this[key])) {
                 new Mvc_Exception(this._name + ': Possible overwrite of an internal Method/Property "' + propName +  '"!');
             }
-            this[propName] = this.vars[propName];
-        }
-        
+            this[key] = this.vars[key];
+        }.bind(this));
+
         this.vars = null;
 
         var injectContainer = new Element('div', {

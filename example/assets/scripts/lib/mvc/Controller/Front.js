@@ -253,10 +253,10 @@ var Mvc_Controller_Front = new Class({
         });
 
         routeToReturn = {};
-        for (var param in params) {
-            routeToReturn[param] = params[param];
-        }
-        
+        $each(params, function(value, key) {
+            routeToReturn[key] = value;
+        });
+
         routeParts.each(function(key, index) {
             key = key.substr(1, key.length);
             routeToReturn[key] = pathParts[index];

@@ -91,10 +91,9 @@ var Mvc_Application = new Class({
      */
     bootstrap: function()
     {
-
-        for (var key in this._config) {
-            this._bootstrapKey(key, this._config[key]);
-        }
+        $each(this._config, function(value, key) {
+            this._bootstrapKey(key, value);
+        }.bind(this));
     },
 
     /**

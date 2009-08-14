@@ -46,13 +46,12 @@ var Mvc_Router = new Class({
      *
      * @param object route the configuration for a single route
      * @scope public
-     * @return void
+     * @return object
      */
     addRoute: function(route)
     {
-        this._routes.include(
-            new Mvc_Router_Route(route)
-        );
+        this._routes.include(new Mvc_Router_Route(route));
+        return this;
     },
 
     /**
@@ -127,11 +126,10 @@ var Mvc_Router = new Class({
             assembledRoute = assembledRoute.replace(':' + paramName,  params[paramName]);
         }
 
-        var params = route.getParams();
-        for(var paramName in params) {
-            assembledRoute = assembledRoute.replace(':' + paramName,  params[paramName]);
-        }
-
-       return assembledRoute;
+        $each(route.getParams(), function(value, key) {
+            assembledRoute = assembledRoute.replace(':' + key,  value);
+        });
+        
+        return assembledRoute;
     }
 });

@@ -64,12 +64,13 @@ var Mvc_Response_Abstract = new Class({
      */
     appendHelpers: function(helpers)
     {
-        for(var helper in helpers) {
+        $each(helpers, function(value, key) {
             if(!$chk(this._responseHelpers)) {
                 this._responseHelpers = [];
             }
-            this._responseHelpers.include(helpers[helper]);
-        }
+            this._responseHelpers.include(value);
+        }.bind(this));
+
         return this;
     },
 
