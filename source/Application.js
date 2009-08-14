@@ -24,7 +24,7 @@ var Mvc_Application = new Class({
 
     _front: null,
 
-    _stage: 'prodcution',
+    _stage: 'production',
     
     /**
      * Mvc_Application::initialize
