@@ -159,10 +159,11 @@ var Mvc_Controller_Front = new Class({
                             .getModule();
 
         // configure the layout
-        this.getLayout().setScriptPath(
-            this.getDispatcher().getModulesDirectory() + module  + '/layout/index.html');
-                this.addEvent('dispatchLoopShutdown', function(){
-                    this.getLayout().start()}.bind(this));
+        this.getLayout().setScriptPath(this.getDispatcher().getModulesDirectory() + module  + '/layout/index.html');
+
+        this.addEvent('dispatchLoopShutdown', function(){
+            this.getLayout().start()
+        }.bind(this));
 
         this.fireEvent('dispatchLoopStartup');
         
