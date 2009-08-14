@@ -36,6 +36,8 @@ var Mvc_Controller_Front = new Class({
 
     _possibleStages: ['developement', 'production'],
 
+    _layout: null,
+
     /**
      * Mvc_Controller_Front::initialize
      *
@@ -159,7 +161,7 @@ var Mvc_Controller_Front = new Class({
                             .getModule();
 
         // configure the layout
-        this.getLayout().setScriptPath(this.getDispatcher().getModulesDirectory() + module  + '/layout/index.html');
+        this.getLayout().setScriptPath(this.getDispatcher().getModulesDirectory() + module + '/');
 
         this.addEvent('dispatchLoopShutdown', function(){
             this.getLayout().start()

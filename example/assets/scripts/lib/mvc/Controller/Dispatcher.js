@@ -84,7 +84,7 @@ var Mvc_Controller_Dispatcher = new Class({
     {
         var request;
         var response;
-        
+
         if(!$chk(request)) {
             new Mvc_Controller_Exception('The Dispatcher(Mvc_Controller_Dispatcher) is missing the request object');
         }

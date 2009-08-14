@@ -22,6 +22,8 @@ var Mvc_Layout = new Class({
 
     _scriptPath: null,
 
+    _scriptFile: 'index.html',
+
     _target: null,
 
     _layoutHtml: null,
@@ -81,7 +83,13 @@ var Mvc_Layout = new Class({
      */
     _getLayoutFile: function()
     {
-        var request = new Request.HTML({method: 'get', url: this.getScriptPath(), async: false, evalScripts: false}).send();
+        var scriptUrl =   this.getScriptPath() + 'layout/' + this.getScriptFile();
+        var request = new Request.HTML({
+            method: 'get',
+            url: scriptUrl,
+            async: false,
+            evalScripts: false
+        }).send();
 
         if(!$chk(request.isSuccess())) {
             new Mvc_Exception('No File for Layout found under: "' + this.getScriptPath() + '"!');
@@ -113,6 +121,30 @@ var Mvc_Layout = new Class({
     getScriptPath: function()
     {
         return this._scriptPath;
+    },
+
+    /**
+     * Mvc_Layout::setScriptFile
+     *
+     * @param string path
+     * @scope public
+     * @return object
+     */
+    setScriptFile: function(file)
+    {
+        this._scriptFile = file;
+        return this;
+    },
+
+    /**
+     * Mvc_Layout::getScriptFile
+     *
+     * @scope public
+     * @return string
+     */
+    getScriptFile: function()
+    {
+        return this._scriptFile;
     },
 
     /**
