@@ -18,7 +18,7 @@
 
 var Mvc_Application = new Class({
 
-    Implements: [Events],
+    Implements: Events,
 
     _name: 'Mvc_Application',
 
