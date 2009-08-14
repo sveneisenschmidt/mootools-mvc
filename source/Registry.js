@@ -18,6 +18,8 @@
 
 var Mvc_Registry = new Class({
 
+    Implements: Events,
+
     _name: 'Mvc_Registry',
 
     _storage: {},
@@ -32,7 +34,9 @@ var Mvc_Registry = new Class({
      */
     store: function(key, value)
     {
+
         this._storage[key] = value;
+        this.fireEvent('stored', [key, value]);
         return this
     },
 
@@ -48,6 +52,19 @@ var Mvc_Registry = new Class({
         return this._storage[key];
     },
 
+    /**
+     * Mvc_Router::erase
+     *
+     * @param string key
+     * @scope public
+     * @return void
+     */
+    erase: function(key)
+    {
+        this._storage.erase(key);
+        this.fireEvent('erased', [key]);
+        return this;
+    },
 
     /**
      * Mvc_Router::getInstance
