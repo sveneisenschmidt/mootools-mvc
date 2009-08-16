@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project name="build-moo.vc" default="all" basedir=".">
+<project name="build-moo.vc" default="build" basedir="." >
     <property name="version" value="0.1 M2" />
     <property name="example.lib.dir" value="example/assets/scripts/lib/mvc" />
     <property name="example.lib.name" value="moo.vc.js" />
