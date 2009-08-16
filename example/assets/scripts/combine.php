@@ -118,7 +118,6 @@ class mvcJavascriptComposer
 }
 
 $library = new mvcJavascriptComposer(array('.js'), array('.', '..', '.json'));
-$library->addPath(realpath(dirname(__FILE__) ). '/lib/mvc/');
 $library->addPath(realpath(dirname(__FILE__) ). '/usr/');
 $files = $library->get();
 $file = $library->combine($files);

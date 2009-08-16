@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="build-moo.vc" default="all" basedir=".">
+    <property name="version" value="0.1 M2" />
+    <property name="example.lib.dir" value="example/assets/scripts/lib/mvc" />
+    <property name="example.lib.name" value="moo.vc.js" />
+    <property name="source.lib.dir" value="source/" />
+
+    
+    <target name="build-from-source">
+        <echo message="deleting old dir" />
+        <delete includeEmptyDirs="true">
+            <fileset dir="${example.lib.dir}"/>
+        </delete>
+
+        <echo message="combining source files" />
+        <concat destfile="${example.lib.dir}/${version}/${example.lib.name}" force="no">
+            <fileset file="build/header.js" />
+            <fileset dir="${source.lib.dir}" casesensitive="false" >
+                <include name="**/*.js" />
+                <exclude name="*.json" />
+            </fileset>
+        </concat>
+        
+    </target>
+
+    <target name="replace-placeholders">
+        <echo message="replace version strings" />
+        <replace file="${example.lib.dir}/${version}/${example.lib.name}"
+                 token="$Id$"
+                 value="${version}"/>
+    </target>
+
+    <target name="build">
+        <ant target="build-from-source" />
+        <ant target="replace-placeholders" />
+    </target>
+
+</project>
