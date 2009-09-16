@@ -38,6 +38,13 @@ var Mvc_Controller_Front = new Class({
 
     _layout: null,
 
+    _defaultErrorController: 'error',
+
+    _defaultFatalErrorAction: 'error',
+
+    _defaultNotFoundAction: 'not-found',
+
+
     /**
      * Mvc_Controller_Front::initialize
      *
@@ -147,14 +154,19 @@ var Mvc_Controller_Front = new Class({
         this.fireEvent('beforeRouteStartup');
         try {
             route = this.getRouter().getRouteByUrl(requestUrl);
+            this._setCurrentRouteName(route.getRouteName());
+            this.getRequest().setParams(
+                this._getRouteParamsWithRequest(route));
         } catch (e) {
-            return this._forward('404');
+            this.getRequest().setParams({
+               'controller': this.getDefaultErrorController(),
+               'action': this.getDefaultNotFoundAction()
+            });
         }
 
-        this._setCurrentRouteName(route.getRouteName());
+        
         this.fireEvent('afterRouteShutdown');
-        this.getRequest().setParams(
-            this._getRouteParamsWithRequest(route));
+
 
         var module = this.getDispatcher()
                         .setModule(this.getRequest())
@@ -177,9 +189,11 @@ var Mvc_Controller_Front = new Class({
         // start dipatch loop for action stack items        
         if(this.hasActionStack() && this.getActionStack().hasItemsForRoute(this.getCurrentRouteName())) {
             this.fireEvent('dispatchActionStackLoopStartup');
-            this.getActionStack().getItemsForRoute(this.getCurrentRouteName()).each(function(stackItem) {
-                 this._pushActionStack(stackItem);
-            }.bind(this));
+
+            $each(this.getActionStack().getItemsForRoute(this.getCurrentRouteName()), function(stackItem){
+                this._pushActionStack(stackItem);
+            }, this);
+            
             this.fireEvent('dispatchActionStackLoopShutdown');
         }
         
@@ -206,8 +220,10 @@ var Mvc_Controller_Front = new Class({
                                       .getResponseBody();
 
             content.each(function(entry) {
-                    entry.content.inject(this.getLayout()
+                entry.content.getChildren().each(function(child) {
+                    child.inject(this.getLayout()
                         .getElement(entry.target), 'bottom');
+                }.bind(this));
             }.bind(this));
 
             var helpers = this.getDispatcher()
@@ -347,13 +363,13 @@ var Mvc_Controller_Front = new Class({
 
 
     /**
-     * Mvc_Controller_Front::_forward
+     * Mvc_Controller_Front::forward
      *
      * @param string path
-     * @scope protected
+     * @scope public
      * @return object
      */
-    _forward: function(path)
+    forward: function(path)
     { 
         if(this.getRequest()._name == 'Mvc_Request_Hash') {
             window.location.hash = '#/' + path;
@@ -361,7 +377,7 @@ var Mvc_Controller_Front = new Class({
         }
         return new Mvc_Controller_Exception('Type of Request not supported!');
 
-    }.protect(),
+    },
 
     /**
      * Mvc_Controller_Front::_setCurrentRouteName
@@ -485,5 +501,39 @@ var Mvc_Controller_Front = new Class({
                     .dispatch(stackRequest, this.getResponse());
 
         return this;
-    }.protect()
+    }.protect(),
+
+    /**
+     * Mvc_Controller_Front::getDefaultErrorController
+     *
+     * @scope public
+     * @return string
+     */
+    getDefaultErrorController: function()
+    {
+        return this._defaultErrorController;
+    },
+
+    /**
+     * Mvc_Controller_Front::getDefaultFatalErrorAction
+     *
+     * @scope public
+     * @return string
+     */
+    getDefaultFatalErrorAction: function()
+    {
+        return this._defaultFatalErrorAction;
+    },
+
+    /**
+     * Mvc_Controller_Front::getDefaultNotFoundAction
+     *
+     * @scope public
+     * @return string
+     */
+    getDefaultNotFoundAction: function()
+    {
+        return this._defaultNotFoundAction;
+    }
+
 });

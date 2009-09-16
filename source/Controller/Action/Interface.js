@@ -35,7 +35,17 @@ var Mvc_Controller_Action_Interface = new Class({
      * @scope public
      * @return void
      */
-    dispatch: function(n) {
+    dispatch: function() {
+        throw new Error("Method can't be called from its Interface. You have to implement in the child Class!");
+    },
+
+    /**
+     * Mvc_Controller_Action_Interface::render
+     *
+     * @scope public
+     * @return void
+     */
+    render: function() {
         throw new Error("Method can't be called from its Interface. You have to implement in the child Class!");
     }
 });

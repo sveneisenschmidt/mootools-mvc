@@ -65,7 +65,7 @@ var Mvc_Controller_Action_Stack = new Class({
 
         if(!$chk(hasItems)) {
             items.each(function(item) {
-                if($chk(item['default']) && hasItems == null) {
+                if($chk(item['__default']) && hasItems == null) {
                     hasItems = true;
                 }
             });
@@ -92,13 +92,14 @@ var Mvc_Controller_Action_Stack = new Class({
             }
         });
 
-        if(!$chk(returnItems)) {
-            items.each(function(item) {
-                if($chk(item['default']) && returnItems == null) {
-                    returnItems = item['default'];
-                }
-            });
-        }
+        items.each(function(item) {
+            if($chk(item['__default'])) {
+                returnItems = $merge(item['__default'], returnItems);
+            }
+        });
+
+        
+        
 
         return returnItems;
     }

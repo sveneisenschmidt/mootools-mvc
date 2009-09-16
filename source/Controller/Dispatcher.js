@@ -20,7 +20,7 @@ var Mvc_Controller_Dispatcher = new Class({
 
     Implements: Events,
 
-    _name: 'Mvc_Controller_Dispatcher',
+    _name: 'Mvc_Controller_Dispatcherf',
 
     _defaultController: 'index',
 
@@ -29,10 +29,6 @@ var Mvc_Controller_Dispatcher = new Class({
     _defaultModule:     'default',
 
     _modulesDirectory: null,
-
-    _defaultErrorController: 'ErrorController',
-
-    _defaultErrorAction: 'error',
 
     _frontController: null,
 
@@ -103,7 +99,7 @@ var Mvc_Controller_Dispatcher = new Class({
                             .dispatch(this.getActionMethod(request));
             
         } catch (exception) {
-            this.setError(exception);
+            this.setError(this._name + ': ' + exception);
         }
 
         return this;
@@ -271,7 +267,7 @@ var Mvc_Controller_Dispatcher = new Class({
     {
         className = request.getControllerName();
         if (!$chk(className)) {
-            className = this.getDefaultAction();
+            className = this.getDefaultController();
         }
 
         return this.formatControllerName(className, request.getModuleName());

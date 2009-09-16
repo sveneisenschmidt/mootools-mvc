@@ -33,6 +33,8 @@ var Mvc_Controller_Action = new Class({
 
     _response: null,
 
+    _methodName: null,
+
     /**
      * Mvc_Controller_Action::initialize
      *
@@ -79,6 +81,7 @@ var Mvc_Controller_Action = new Class({
     _initView: function()
     {
         var view = new Mvc_View();
+            view.setController(this);
         var scriptPath = this.getFrontController().getModulesDirectory();
 
         if($chk(this.getFrontController().getDispatcher().getModule())) {
@@ -102,9 +105,10 @@ var Mvc_Controller_Action = new Class({
         this._initView();
 
         try {
+            this._methodName = method;
             eval('this.' + method + '()');
         } catch (e) {
-            new Mvc_Controller_Exception(this._name + ': ' + e.toString());
+            new Mvc_Controller_Exception(this._name + ': ' + e.message);
         }
     },
 
@@ -224,7 +228,19 @@ var Mvc_Controller_Action = new Class({
         }
         var currentRoute = this.getFrontController().getCurrentRouteName();
 
-        filePath = this._getParam('controller') + '/' + this._getParam('action') + '.html';
+
+        var controller = this._getParam('controller');
+        var action = this._getParam('action');
+
+        if(!$chk(controller)) {
+            controller = this.getControllerName();
+        }
+        if(!$chk(action)) {
+            action = this.getActionName();
+        }
+
+
+        filePath =  controller + '/' + action  + '.html';
 
         if($chk(this.config.views)) {
             this.config.views.each(function(item) {
@@ -235,6 +251,33 @@ var Mvc_Controller_Action = new Class({
         }
 
         return filePath;
+    },
+
+    /**
+     * Mvc_Controller_Action::getControllerName
+     *
+     * @scope public
+     * @return string
+     */
+    getControllerName: function()
+    {
+        var controllerName  = this._name.replace('Controller', '').hyphenate();
+        if(controllerName[0] == '-') {
+            controllerName = controllerName.substring(1, 1000);
+        }
+
+        return controllerName;
+    },
+
+    /**
+     * Mvc_Controller_Action::getActionName
+     *
+     * @scope public
+     * @return string
+     */
+    getActionName: function()
+    {
+        return this._methodName.replace('Action', '').hyphenate().toLowerCase();
     },
 
     /**

@@ -28,8 +28,10 @@ var Mvc_View = new Class({
 
     _renderContainer: null,
 
+    _controller: null,
+
     /**
-     * Mvc_Controller_Action::initialize
+     * Mvc_View::initialize
      *
      * @scope public
      * @return void
@@ -40,7 +42,7 @@ var Mvc_View = new Class({
     },
 
     /**
-     * Mvc_Controller_Action::getHelpers
+     * Mvc_View::getHelpers
      *
      * @scope public
      * @return object
@@ -51,7 +53,7 @@ var Mvc_View = new Class({
     },
 
     /**
-     * Mvc_Controller_Action::getHelper
+     * Mvc_View::getHelper
      *
      * @scope public
      * @return object
@@ -72,7 +74,7 @@ var Mvc_View = new Class({
     },
 
     /**
-     * Mvc_Controller_Action::_setupRenderContainer
+     * Mvc_View::_setupRenderContainer
      *
      * @scope protected
      * @return void
@@ -92,7 +94,7 @@ var Mvc_View = new Class({
     }.protect(),
 
     /**
-     * Mvc_Controller_Action::getRenderContainer
+     * Mvc_View::getRenderContainer
      *
      * @scope protected
      * @return element
@@ -103,7 +105,7 @@ var Mvc_View = new Class({
     }.protect(),
 
     /**
-     * Mvc_Controller_Action::setScriptPath
+     * Mvc_View::setScriptPath
      *
      * @param string path
      * @scope public
@@ -115,7 +117,7 @@ var Mvc_View = new Class({
     },
 
     /**
-     * Mvc_Controller_Action::assign
+     * Mvc_View::assign
      *
      * @param string key
      * @param mixed value
@@ -128,7 +130,7 @@ var Mvc_View = new Class({
     },
 
     /**
-     * Mvc_Controller_Action::render
+     * Mvc_View::render
      *
      * @param string filePath
      * @scope public
@@ -164,7 +166,8 @@ var Mvc_View = new Class({
             script.dispose();
         }.bind(this));
 
-        var html = injectContainer.clone().cloneEvents(injectContainer);
+        var html = injectContainer.clone();
+
         var htmlElements = html.getElements('*');
         
         injectContainer.getElements('*').each(function(injectItem, index) {
@@ -173,11 +176,11 @@ var Mvc_View = new Class({
 
         injectContainer.dispose();
 
-        return html;
+        return injectContainer;
     },
 
     /**
-     * Mvc_Controller_Action::getScriptPath
+     * Mvc_View::getScriptPath
      *
      * @scope public
      * @return string
@@ -188,7 +191,7 @@ var Mvc_View = new Class({
     },
 
     /**
-     * Mvc_Controller_Action::getElement
+     * Mvc_View::getElement
      *
      * @param string selector
      * @scope public
@@ -200,7 +203,7 @@ var Mvc_View = new Class({
     },
 
     /**
-     * Mvc_Controller_Action::getElements
+     * Mvc_View::getElements
      *
      * @param string selector
      * @scope public
@@ -209,5 +212,42 @@ var Mvc_View = new Class({
     getElements: function(selector)
     {
         return this._getRenderContainer().getElement('.inject-container').getElements(selector);
+    },
+
+    /**
+     * Mvc_View::setController
+     *
+     * @param string selector
+     * @scope public
+     * @return object
+     */
+    setController: function(controller)
+    {
+        this._controller = controller;
+        return this;
+    },
+
+    /**
+     * Mvc_View::getController
+     *
+     * @param string selector
+     * @scope public
+     * @return object
+     */
+    getController: function(controller)
+    {
+        return this._controller;
+    },
+
+    /**
+     * Mvc_View::getFrontController
+     *
+     * @param string selector
+     * @scope public
+     * @return object
+     */
+    getFrontController: function()
+    {
+        return this._controller.getFrontController();
     }
 });

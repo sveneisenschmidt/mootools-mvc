@@ -56,8 +56,13 @@ var Mvc_Router_Route = new Class({
      */
     _getIdentifier: function(routeConfig)
     {
-        var routeString = routeConfig.toSource();
-            return routeString.substr(2, routeString.indexOf(':') - 2).toString();
+        var routeString;
+        
+        $each(routeConfig, function(value, key){
+            routeString = key;
+        }, this);
+
+        return routeString;
     }.protect(),
 
     /**

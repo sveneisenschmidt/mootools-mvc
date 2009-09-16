@@ -20,5 +20,10 @@ var Mvc_Controller_Exception = new Class({
 
     Implements: Mvc_Exception,
 
-    _name: 'Mvc_Controller_Exception'
+    _name: 'Mvc_Controller_Exception',
+
+    initialize: function(msg)
+    {
+        throw new Error(msg);
+    }
 });
