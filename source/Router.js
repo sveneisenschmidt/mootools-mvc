@@ -110,6 +110,15 @@ var Mvc_Router = new Class({
         return routeToReturn;
     },
 
+
+    /**
+     * Mvc_Router::assemble
+     *
+     * @param array params
+     * @param string routeName
+     * @scope public
+     * @return void
+     */
     assemble: function(params, routeName)
     {
         var route = this.getRouteByName(routeName);
