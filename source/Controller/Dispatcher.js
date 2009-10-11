@@ -20,7 +20,7 @@ var Mvc_Controller_Dispatcher = new Class({
 
     Implements: Events,
 
-    _name: 'Mvc_Controller_Dispatcherf',
+    _name: 'Mvc_Controller_Dispatcher',
 
     _defaultController: 'index',
 
