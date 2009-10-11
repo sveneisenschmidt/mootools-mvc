@@ -167,9 +167,12 @@ var Mvc_Router_Route = new Class({
             }.bind(this));
         }
 
-        // params.name = this.getRouteName();
         this._route = route.route;
         this._clean = main;
+
+        if($chk(route.params)) {
+            return $merge(params, route.params);
+        }
 
         return params;
 
