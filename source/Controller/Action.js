@@ -19,7 +19,7 @@
 
 var Mvc_Controller_Action = new Class({
 
-    Implements: Mvc_Controller_Action_Interface,
+    Implements: [Mvc_Controller_Action_Interface, Events],
 
     _name: 'Mvc_Controller_Action',
 
@@ -46,6 +46,16 @@ var Mvc_Controller_Action = new Class({
         this.config = new Mvc_Registry()
                              .getInstance()
                                  .get('config');
+
+
+        this.addEvent('preRenderControllerAction', function() {
+            $try(eval('this.preRender' + this.getActionMethodName().ucfirst()));
+        }.bind(this));
+
+        this.addEvent('postRenderControllerAction', function() {
+            $try(eval('this.postRender' + this.getActionMethodName().ucfirst()));
+        }.bind(this));
+
     },
 
     /**
@@ -202,6 +212,8 @@ var Mvc_Controller_Action = new Class({
      */
     render: function()
     {
+        this.fireEvent('preRenderControllerAction');
+
         var html = this.getView().render(
                         this.getViewFile());
 
@@ -212,6 +224,8 @@ var Mvc_Controller_Action = new Class({
 
         this.getResponse()
             .appendBody(this.getViewTarget(), html);
+
+        this.fireEvent('postRenderControllerAction');
     },
 
     /**
@@ -278,6 +292,17 @@ var Mvc_Controller_Action = new Class({
     getActionName: function()
     {
         return this._methodName.replace('Action', '').hyphenate().toLowerCase();
+    },
+
+    /**
+     * Mvc_Controller_Action::getActionMethodName
+     *
+     * @scope public
+     * @return string
+     */
+    getActionMethodName: function()
+    {
+        return this._methodName;
     },
 
     /**
