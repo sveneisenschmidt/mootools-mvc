@@ -152,13 +152,10 @@ var Mvc_Router_Route = new Class({
         }
 
         if($chk(route.defaults)) {
-            route.defaults.each(function(item, index){
-                key = this._getIdentifier(item);
-                value = item[key].toString();
+            $each(route.defaults, function(value, key){
                 params[key] = value;
-            }.bind(this));
+            }, this);
         }
-
         if(tmpParams != null) {
             tmpParams.each(function(prop){
                 if(prop.substr(-1) == '/') {
