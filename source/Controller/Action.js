@@ -47,7 +47,6 @@ var Mvc_Controller_Action = new Class({
                              .getInstance()
                                  .get('config');
 
-
         this.addEvent('preRenderControllerAction', function() {
             $try(eval('this.preRender' + this.getActionMethodName().ucfirst()));
         }.bind(this));
