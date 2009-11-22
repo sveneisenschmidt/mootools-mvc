@@ -27,7 +27,7 @@ var Mvc_Controller_Action = new Class({
 
     _frontController: null,
 
-    _view: null,
+    view: null,
 
     config: null,
 
@@ -54,6 +54,8 @@ var Mvc_Controller_Action = new Class({
         this.addEvent('postRenderControllerAction', function() {
             $try(eval('this.postRender' + this.getActionMethodName().ucfirst()));
         }.bind(this));
+
+        $try(eval('this.init'));
 
     },
 
@@ -188,7 +190,7 @@ var Mvc_Controller_Action = new Class({
      */
     setView: function(view)
     {
-        this._view = view;
+        this.view = view;
         return this;
     },
 
@@ -200,7 +202,7 @@ var Mvc_Controller_Action = new Class({
      */
     getView: function()
     {
-        return this._view;
+        return this.view;
     },
 
     /**
