@@ -126,6 +126,13 @@ var Mvc_View = new Class({
      */
     assign: function(key, value)
     {
+        if($type(key) === 'object') {
+            $each(key, function(value, key2) {
+                this.vars[key2] = value;
+            }, this);
+            return;
+        }
+
         this.vars[key] = value;
     },
 
