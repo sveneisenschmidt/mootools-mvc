@@ -86,8 +86,7 @@ var Mvc_View = new Class({
                 'display': 'none',
                 'visibility': 'hidden'
             },
-            'class': '_mvcRenderContainer',
-            'text': 'test'
+            'class': '_mvcRenderContainer'
         }).inject(document.getElement('body'), 'bottom');
 
         return this;
