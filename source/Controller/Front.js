@@ -186,8 +186,9 @@ var Mvc_Controller_Front = new Class({
                 .setFrontController(this)
                     .dispatch(this.getRequest(), this.getResponse());
 
+
         // start dipatch loop for action stack items        
-        if(this.hasActionStack() && this.getActionStack().hasItemsForRoute(this.getCurrentRouteName())) {
+        if(this.hasActionStack() && this.getActionStack().hasItemsForRoute(this.getCurrentRouteName()) && !this.getDispatcher().hasError()) {
             this.fireEvent('dispatchActionStackLoopStartup');
 
             $each(this.getActionStack().getItemsForRoute(this.getCurrentRouteName()), function(stackItem){
