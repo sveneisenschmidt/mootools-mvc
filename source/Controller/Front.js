@@ -181,63 +181,22 @@ var Mvc_Controller_Front = new Class({
 
         this.fireEvent('dispatchLoopStartup');
         
-
-
-
-        // start dipatch loop for action stack items        
-        if(this.hasActionStack() && this.getActionStack().hasItemsForRoute(this.getCurrentRouteName())) {
-            this.fireEvent('dispatchActionStackLoopStartup');
-
-            $each(this.getActionStack().getItemsForRoute(this.getCurrentRouteName()), function(stackItem) {
-                try {
-                    this._pushActionStack(stackItem);
-                } catch (e) {
-                    this.getDispatcher().setError(e);
-                }
-                
-            }, this);
-            
-            this.fireEvent('dispatchActionStackLoopShutdown');
-        }
-
         // dispatch main request
         this.getDispatcher()
                 .setFrontController(this)
                     .dispatch(this.getRequest(), this.getResponse());
-                    
 
-        if(!this.getDispatcher().hasError()) {
-            try {
-                this.fireEvent('dispatchLoopShutdown');
+        // start dipatch loop for action stack items        
+        if(this.hasActionStack() && this.getActionStack().hasItemsForRoute(this.getCurrentRouteName()) && !this.getDispatcher().hasError()) {
+            this.fireEvent('dispatchActionStackLoopStartup');
 
-                var content = this.getDispatcher()
-                                      .getResponse()
-                                          .getResponseBody();
-
-                content.each(function(entry) {
-                    entry.content.getChildren().each(function(child) {
-                        if($chk(document.getElement(entry.target))) {
-                            child.inject(this.getLayout()
-                                .getElement(entry.target), 'bottom');
-                        } else {
-                            new Mvc_Controller_Exception('Target element does not exist!');
-                        }
-                    }.bind(this));
-                }.bind(this));
-
-                var helpers = this.getDispatcher()
-                                     .getResponse()
-                                        .getViewHelpers();
-
-                if($chk(helpers)) {
-                    helpers.each(function(helper) {
-                        helper.execute(this);
-                            }.bind(this));}
-                
-            } catch (e) {
-                this.getDispatcher().setError(e);
-            }
+            $each(this.getActionStack().getItemsForRoute(this.getCurrentRouteName()), function(stackItem){
+                this._pushActionStack(stackItem);
+            }, this);
+            
+            this.fireEvent('dispatchActionStackLoopShutdown');
         }
+        
 
         if(this.getDispatcher().hasError()) {
             this.fireEvent('dispatchThrowsError');
@@ -251,9 +210,31 @@ var Mvc_Controller_Front = new Class({
 
             this.getLayout().getTarget().set('html', html);
             this._resetDispatcher();
+            
+        } else {
+
+            this.fireEvent('dispatchLoopShutdown');
+            
+            var content = this.getDispatcher()
+                                  .getResponse()
+                                      .getResponseBody();
+
+            content.each(function(entry) {
+                entry.content.inject(this.getLayout().getElement(entry.target), 'bottom');
+            }.bind(this));
+
+            var helpers = this.getDispatcher()
+                                 .getResponse()
+                                    .getViewHelpers();
+
+            if($chk(helpers)) {
+                helpers.each(function(helper) {
+                    helper.execute(this);
+                        }.bind(this));}
+
+            this.fireEvent('renderingDone');
         }
         
-        this.fireEvent('renderingDone');
         this._runOnce = true;
     },
 

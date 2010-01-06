@@ -30,16 +30,7 @@ var Mvc_View = new Class({
 
     _controller: null,
 
-    /**
-     * Mvc_View::initialize
-     *
-     * @scope public
-     * @return void
-     */
-    initialize: function()
-    {
-        return this._setupRenderContainer();
-    },
+    html: '',
 
     /**
      * Mvc_View::getHelpers
@@ -72,36 +63,6 @@ var Mvc_View = new Class({
         
         return this._helpers[helper];
     },
-
-    /**
-     * Mvc_View::_setupRenderContainer
-     *
-     * @scope protected
-     * @return void
-     */
-    _setupRenderContainer: function()
-    {
-        this._renderContainer = new Element('div', {
-            'styles': {
-                'display': 'none',
-                'visibility': 'hidden'
-            },
-            'class': '_mvcRenderContainer'
-        }).inject(document.getElement('body'), 'bottom');
-
-        return this;
-    }.protect(),
-
-    /**
-     * Mvc_View::getRenderContainer
-     *
-     * @scope protected
-     * @return element
-     */
-    _getRenderContainer: function()
-    {
-        return document.getElement('div._mvcRenderContainer');
-    }.protect(),
 
     /**
      * Mvc_View::setScriptPath
@@ -146,7 +107,7 @@ var Mvc_View = new Class({
     {
         var fullPath = this.getScriptPath() + filePath;
 
-        var request = new Request({method: 'get', async: false, url: fullPath, evalScripts: false});
+        var request = new Request.HTML({method: 'get', async: false, url: fullPath, evalScripts: false});
             request.send();
             
         if(!$chk(request.isSuccess())) {
@@ -162,27 +123,18 @@ var Mvc_View = new Class({
 
         this.vars = null;
 
-        var injectContainer = new Element('div', {
-            'html': request.response.text,
-            'class': 'inject-container'
-        }).inject(this._getRenderContainer());
-
-        injectContainer.getElements('script').each(function(script){
-            eval(script.get('text'));
-            script.dispose();
-        }.bind(this));
-
-        var html = injectContainer.clone();
-
-        var htmlElements = html.getElements('*');
-        
-        injectContainer.getElements('*').each(function(injectItem, index) {
-            htmlElements[index].cloneEvents(injectItem);
+        this.html = new Element('div', {
+            'html': request.response.html
         });
 
-        injectContainer.dispose();
 
-        return injectContainer;
+        var js = request.response.javascript.trim();
+        if(js != "") {
+            eval(js);
+        }
+
+
+        return this.html;
     },
 
     /**
@@ -194,30 +146,6 @@ var Mvc_View = new Class({
     getScriptPath: function()
     {
         return this._scriptPath;
-    },
-
-    /**
-     * Mvc_View::getElement
-     *
-     * @param string selector
-     * @scope public
-     * @return object
-     */
-    getElement: function(selector)
-    {
-        return this._getRenderContainer().getElement('.inject-container').getElement(selector);
-    },
-
-    /**
-     * Mvc_View::getElements
-     *
-     * @param string selector
-     * @scope public
-     * @return object
-     */
-    getElements: function(selector)
-    {
-        return this._getRenderContainer().getElement('.inject-container').getElements(selector);
     },
 
     /**
